@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>MANTALET ADMIN PANEL</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+<style>
+
+:root{
+  --bg:#0b1220;
+  --panel:#0f172a;
+  --text:#ffffff;
+  --muted:#94a3b8;
+  --border:#1e293b;
+  --accent:#0ea5a4;
+}
+
+body.light{
+  --bg:#f1f5f9;
+  --panel:#ffffff;
+  --text:#0f172a;
+  --muted:#475569;
+  --border:#e2e8f0;
+  --accent:#0ea5a4;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  display:flex;
+  min-height:100vh;
+  transition:.3s;
+}
+
+.sidebar{
+  width:260px;
+  background:var(--panel);
+  border-right:1px solid var(--border);
+  padding:25px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+
+.brand{display:flex;gap:12px;align-items:center;margin-bottom:40px;}
+.logo{width:50px;height:50px;background:var(--accent);display:flex;align-items:center;justify-content:center;border-radius:12px;font-weight:bold;color:#fff;}
+
+.menu button{
+  width:100%;padding:14px;margin-bottom:10px;
+  background:transparent;border:1px solid var(--border);
+  color:var(--text);text-align:left;border-radius:12px;cursor:pointer;
+}
+
+.menu button.active,.menu button:hover{background:var(--accent);color:#fff;}
+
+.theme-btn{padding:12px;border:none;border-radius:12px;background:var(--accent);color:#fff;cursor:pointer;}
+
+.main{flex:1;padding:20px;overflow-y:auto;}
+
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;}
+
+.search{padding:10px 15px;width:300px;border-radius:10px;border:1px solid var(--border);background:var(--panel);color:var(--text);}
+
+.btn{background:var(--accent);border:none;padding:10px 18px;border-radius:10px;color:#fff;cursor:pointer;}
+
+.section{display:none;background:var(--panel);padding:20px;border-radius:16px;border:1px solid var(--border);margin-bottom:20px;}
+.section.active{display:block;}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px;}
+.card{background:var(--panel);padding:20px;border:1px solid var(--border);border-radius:16px;}
+
+input,textarea{
+  width:100%;padding:12px;margin-bottom:10px;
+  border-radius:10px;border:1px solid var(--border);
+  background:transparent;color:var(--text);
+}
+
+table{width:100%;border-collapse:collapse;}
+th,td{padding:12px;border-bottom:1px solid var(--border);text-align:left;}
+
+.list-item{padding:12px;border:1px solid var(--border);border-radius:12px;margin-bottom:10px;}
+.small-btn{padding:6px 10px;border:none;border-radius:8px;cursor:pointer;margin-left:5px;}
+.edit{background:#334155;color:#fff;}
+.del{background:#ef4444;color:#fff;}
+
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+  <div>
+    <div class="brand">
+      <div class="logo">MC</div>
+      <div><h3>MANTALET</h3><small>ADMIN</small></div>
+    </div>
+
+    <div class="menu">
+      <button class="nav active" data-target="dashboard">Dashboard</button>
+      <button class="nav" data-target="stats">Statistics</button>
+      <button class="nav" data-target="projects">Projects</button>
+      <button class="nav" data-target="services">Services</button>
+      <button class="nav" data-target="testimonials">Testimonials</button>
+      <button class="nav" data-target="contact">Contact</button>
+    </div>
+  </div>
+
+  <button class="theme-btn" onclick="toggleTheme()">Toggle Theme</button>
+</div>
+
+<div class="main">
+
+<div class="topbar">
+  <input class="search" placeholder="Search..."/>
+  <button class="btn" onclick="saveAll()">Save All</button>
+</div>
+
+<!-- DASHBOARD -->
+<div class="section active" id="dashboard">
+  <div class="grid">
+    <div class="card"><h3>Projects</h3><h1 id="cProjects">0</h1></div>
+    <div class="card"><h3>Services</h3><h1 id="cServices">0</h1></div>
+    <div class="card"><h3>Testimonials</h3><h1 id="cTestimonials">0</h1></div>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="section" id="stats">
+  <h2>Statistics</h2>
+  <input id="years" placeholder="Years of Experience"/>
+  <input id="projectsDone" placeholder="Projects Completed"/>
+  <input id="satisfaction" placeholder="Client Satisfaction"/>
+</div>
+
+<!-- PROJECTS -->
+<div class="section" id="projects">
+  <h2>Projects</h2>
+  <input id="pTitle" placeholder="Title"/>
+  <input id="pLocation" placeholder="Location"/>
+  <textarea id="pDesc" placeholder="Description"></textarea>
+  <button class="btn" onclick="addProject()">Add</button>
+  <div id="projectList"></div>
+</div>
+
+<!-- SERVICES -->
+<div class="section" id="services">
+  <h2>Services</h2>
+  <input id="sTitle" placeholder="Service Title"/>
+  <textarea id="sDesc" placeholder="Description"></textarea>
+  <button class="btn" onclick="addService()">Add</button>
+  <div id="serviceList"></div>
+</div>
+
+<!-- TESTIMONIALS -->
+<div class="section" id="testimonials">
+  <h2>Testimonials</h2>
+  <input id="tName" placeholder="Name"/>
+  <input id="tRole" placeholder="Role"/>
+  <textarea id="tMsg" placeholder="Message"></textarea>
+  <button class="btn" onclick="addTestimonial()">Add</button>
+  <div id="testimonialList"></div>
+</div>
+
+<!-- CONTACT -->
+<div class="section" id="contact">
+  <h2>Contact Information</h2>
+  <input id="cEmail" placeholder="Email Address"/>
+  <input id="cPhone" placeholder="Phone Number"/>
+  <input id="cLocation" placeholder="Location"/>
+  <button class="btn" onclick="saveContactInfo()">Save Contact Info</button>
+</div>
+
+</div>
+
+<script>
+
+let projects = JSON.parse(localStorage.getItem('projects')) || [];
+let services = JSON.parse(localStorage.getItem('services')) || [];
+let testimonials = JSON.parse(localStorage.getItem('testimonials')) || [];
+let stats = JSON.parse(localStorage.getItem('stats')) || {};
+let contactInfo = JSON.parse(localStorage.getItem('contactInfo')) || {
+  email: 'info@mantaletconsultants.com',
+  phone: '+254 724 411 574',
+  location: 'Spur Mall, Kimbo, Kenya'
+};
+
+function saveAll(){
+  localStorage.setItem('projects', JSON.stringify(projects));
+  localStorage.setItem('services', JSON.stringify(services));
+  localStorage.setItem('testimonials', JSON.stringify(testimonials));
+  localStorage.setItem('stats', JSON.stringify(stats));
+  localStorage.setItem('contactInfo', JSON.stringify(contactInfo));
+  alert('Saved to localStorage');
+}
+
+function render(){
+  document.getElementById('cProjects').innerText = projects.length;
+  document.getElementById('cServices').innerText = services.length;
+  document.getElementById('cTestimonials').innerText = testimonials.length;
+
+  document.getElementById('projectList').innerHTML = projects.map((p,i)=>
+    `<div class='list-item'>${p.title} - ${p.location} <button class='small-btn del' onclick='delProject(${i})'>X</button></div>`
+  ).join('');
+
+  document.getElementById('serviceList').innerHTML = services.map((s,i)=>
+    `<div class='list-item'>${s.title} <button class='small-btn del' onclick='delService(${i})'>X</button></div>`
+  ).join('');
+
+  document.getElementById('testimonialList').innerHTML = testimonials.map((t,i)=>
+    `<div class='list-item'>${t.name} <button class='small-btn del' onclick='delTestimonial(${i})'>X</button></div>`
+  ).join('');
+
+  // Load contact info into inputs
+  document.getElementById('cEmail').value = contactInfo.email || '';
+  document.getElementById('cPhone').value = contactInfo.phone || '';
+  document.getElementById('cLocation').value = contactInfo.location || '';
+
+  // Load stats into inputs
+  document.getElementById('years').value = stats.years || '';
+  document.getElementById('projectsDone').value = stats.projectsDone || '';
+  document.getElementById('satisfaction').value = stats.satisfaction || '';
+}
+
+function addProject(){
+  projects.push({
+    title:pTitle.value,
+    location:pLocation.value,
+    desc:pDesc.value,
+    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1200&auto=format&fit=crop'
+  });
+  render();
+}
+
+function addService(){
+  services.push({
+    title:sTitle.value,
+    desc:sDesc.value,
+    icon: 'fa-calculator'
+  });
+  render();
+}
+
+function addTestimonial(){
+  const initials = tName.value.split(' ').map(n => n[0]).join('').toUpperCase();
+  testimonials.push({
+    name:tName.value,
+    role:tRole.value,
+    msg:tMsg.value,
+    initials: initials
+  });
+  render();
+}
+
+function delProject(i){projects.splice(i,1);render();}
+function delService(i){services.splice(i,1);render();}
+function delTestimonial(i){testimonials.splice(i,1);render();}
+
+function saveContactInfo(){
+  contactInfo = {
+    email: cEmail.value,
+    phone: cPhone.value,
+    location: cLocation.value
+  };
+  alert('Contact info saved! Click Save All to persist.');
+}
+
+function saveStats(){
+  stats = {
+    years: parseInt(years.value) || 12,
+    projectsDone: parseInt(projectsDone.value) || 85,
+    satisfaction: parseInt(satisfaction.value) || 98,
+    team: 15
+  };
+  alert('Stats saved! Click Save All to persist.');
+}
+
+// NAV
+const buttons=document.querySelectorAll('.nav');
+const sections=document.querySelectorAll('.section');
+buttons.forEach(b=>b.onclick=()=>{
+  buttons.forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');
+  sections.forEach(s=>s.classList.remove('active'));
+  document.getElementById(b.dataset.target).classList.add('active');
+});
+
+// THEME
+function toggleTheme(){document.body.classList.toggle('light')}
+
+render();
+
+// Add event listeners for stats inputs
+document.getElementById('years').addEventListener('change', saveStats);
+document.getElementById('projectsDone').addEventListener('change', saveStats);
+document.getElementById('satisfaction').addEventListener('change', saveStats);
+</script>
+
+</body>
+</html>

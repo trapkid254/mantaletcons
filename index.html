@@ -1,0 +1,2452 @@
+# Complete MANTALET CONSULTANTS Landing Page (Navbar + Hero + About)
+
+Save the following as `index.html`
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>MANTALET CONSULTANTS</title>
+
+  <!-- GOOGLE FONT -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- FONT AWESOME -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  />
+
+  <style>
+
+    /* =========================================
+       ROOT VARIABLES
+    ========================================= */
+
+    :root{
+
+      --primary-color:#0f172a;
+      --secondary-color:#1e293b;
+      --accent-color:#0ea5a4;
+
+      --text-color:#0f172a;
+      --text-light:#64748b;
+
+      --bg-color:#ffffff;
+
+      --nav-bg:rgba(255,255,255,0.72);
+
+      --border-color:rgba(15,23,42,0.08);
+
+      --shadow-light:
+      0 4px 20px rgba(0,0,0,0.06);
+
+      --transition:
+      all 0.3s ease;
+    }
+
+    body.dark-mode{
+
+      --primary-color:#f8fafc;
+      --secondary-color:#cbd5e1;
+      --accent-color:#2dd4bf;
+
+      --text-color:#f8fafc;
+      --text-light:#94a3b8;
+
+      --bg-color:#0f172a;
+
+      --nav-bg:rgba(15,23,42,0.72);
+
+      --border-color:rgba(255,255,255,0.08);
+
+      --shadow-light:
+      0 4px 20px rgba(0,0,0,0.35);
+    }
+
+    /* =========================================
+       RESET
+    ========================================= */
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      font-family:'Inter', sans-serif;
+      background:var(--bg-color);
+      color:var(--text-color);
+      transition:var(--transition);
+      overflow-x:hidden;
+    }
+
+    a{
+      text-decoration:none;
+      color:inherit;
+    }
+
+    ul{
+      list-style:none;
+    }
+
+    /* =========================================
+       NAVBAR
+    ========================================= */
+
+    .navbar{
+
+      position:fixed;
+      top:0;
+      left:0;
+
+      width:100%;
+
+      z-index:1000;
+
+      backdrop-filter:blur(12px);
+
+      background:var(--nav-bg);
+
+      border-bottom:1px solid var(--border-color);
+
+      transition:var(--transition);
+    }
+
+    .nav-container{
+
+      width:90%;
+      max-width:1400px;
+
+      margin:auto;
+
+      height:85px;
+
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+
+    .nav-left{
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
+
+    .logo-box{
+
+      width:52px;
+      height:52px;
+
+      border-radius:14px;
+
+      background:
+      linear-gradient(
+        135deg,
+        var(--accent-color),
+        #164e63
+      );
+
+      display:flex;
+      align-items:center;
+      justify-content:center;
+
+      color:#ffffff;
+
+      font-size:1rem;
+      font-weight:700;
+
+      box-shadow:var(--shadow-light);
+    }
+
+    .brand-name{
+
+      font-size:1rem;
+      font-weight:700;
+
+      letter-spacing:2px;
+
+      color:var(--text-color);
+
+      white-space:nowrap;
+    }
+
+    .nav-right{
+      display:flex;
+      align-items:center;
+      gap:35px;
+    }
+
+    .nav-menu{
+
+      display:flex;
+      align-items:center;
+      gap:30px;
+    }
+
+    .nav-menu a{
+
+      position:relative;
+
+      font-size:0.95rem;
+      font-weight:500;
+
+      color:var(--text-color);
+
+      transition:var(--transition);
+    }
+
+    .nav-menu a::after{
+
+      content:"";
+
+      position:absolute;
+
+      left:0;
+      bottom:-8px;
+
+      width:0%;
+      height:2px;
+
+      background:var(--accent-color);
+
+      transition:var(--transition);
+    }
+
+    .nav-menu a:hover::after{
+      width:100%;
+    }
+
+    .nav-menu a:hover{
+      color:var(--accent-color);
+    }
+
+    /* =========================================
+       THEME BUTTON
+    ========================================= */
+
+    .theme-toggle{
+
+      width:45px;
+      height:45px;
+
+      border:none;
+      outline:none;
+
+      border-radius:50%;
+
+      cursor:pointer;
+
+      background:rgba(255,255,255,0.08);
+
+      color:var(--text-color);
+
+      display:flex;
+      align-items:center;
+      justify-content:center;
+
+      font-size:1rem;
+
+      border:1px solid var(--border-color);
+
+      transition:var(--transition);
+    }
+
+    .theme-toggle:hover{
+      transform:translateY(-2px);
+    }
+
+    /* =========================================
+       MOBILE MENU ICON
+    ========================================= */
+
+    .menu-toggle{
+      display:none;
+
+      font-size:1.4rem;
+
+      cursor:pointer;
+
+      color:var(--text-color);
+    }
+
+    /* =========================================
+       HERO SECTION
+    ========================================= */
+
+    .hero{
+
+      position:relative;
+
+      width:100%;
+      height:100vh;
+
+      display:flex;
+      align-items:center;
+
+      padding:0 8%;
+
+      overflow:hidden;
+
+      background:
+      url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=1920&auto=format&fit=crop')
+      center/cover no-repeat;
+    }
+
+    .hero-overlay{
+
+      position:absolute;
+      inset:0;
+
+      background:
+      linear-gradient(
+        to right,
+        rgba(2,6,23,0.90),
+        rgba(2,6,23,0.72)
+      );
+    }
+
+    .hero-content{
+
+      position:relative;
+      z-index:2;
+
+      max-width:760px;
+
+      animation:fadeUp 1.2s ease;
+    }
+
+    .hero-subtitle{
+
+      color:var(--accent-color);
+
+      font-size:0.95rem;
+      font-weight:600;
+
+      letter-spacing:4px;
+
+      margin-bottom:22px;
+    }
+
+    .hero-title{
+
+      font-size:4.3rem;
+      line-height:1.1;
+
+      font-weight:700;
+
+      color:#ffffff;
+
+      letter-spacing:-2px;
+
+      margin-bottom:28px;
+    }
+
+    .hero-description{
+
+      font-size:1.1rem;
+      line-height:1.9;
+
+      color:rgba(255,255,255,0.82);
+
+      max-width:650px;
+
+      margin-bottom:40px;
+    }
+
+    .hero-buttons{
+
+      display:flex;
+      align-items:center;
+
+      gap:18px;
+
+      flex-wrap:wrap;
+    }
+
+    .btn{
+
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+
+      padding:15px 34px;
+
+      border-radius:50px;
+
+      font-size:0.95rem;
+      font-weight:600;
+
+      transition:var(--transition);
+    }
+
+    .btn-primary{
+
+      background:var(--accent-color);
+
+      color:#ffffff;
+
+      box-shadow:
+      0 8px 25px rgba(14,165,164,0.35);
+    }
+
+    .btn-primary:hover{
+
+      transform:translateY(-3px);
+
+      opacity:0.95;
+    }
+
+    .btn-secondary{
+
+      border:1px solid rgba(255,255,255,0.25);
+
+      color:#ffffff;
+
+      backdrop-filter:blur(10px);
+
+      background:rgba(255,255,255,0.05);
+    }
+
+    .btn-secondary:hover{
+
+      background:rgba(255,255,255,0.12);
+
+      transform:translateY(-3px);
+    }
+
+    /* =========================================
+       SCROLL INDICATOR
+    ========================================= */
+
+    .scroll-indicator{
+
+      position:absolute;
+
+      bottom:35px;
+      left:50%;
+
+      transform:translateX(-50%);
+
+      z-index:3;
+    }
+
+    .scroll-indicator span{
+
+      display:block;
+
+      width:28px;
+      height:48px;
+
+      border:2px solid rgba(255,255,255,0.6);
+
+      border-radius:20px;
+
+      position:relative;
+    }
+
+    .scroll-indicator span::before{
+
+      content:"";
+
+      position:absolute;
+
+      top:10px;
+      left:50%;
+
+      transform:translateX(-50%);
+
+      width:6px;
+      height:6px;
+
+      border-radius:50%;
+
+      background:#ffffff;
+
+      animation:scrollAnim 1.8s infinite;
+    }
+
+    /* =========================================
+       ABOUT SECTION
+    ========================================= */
+
+    .about-section{
+
+      width:100%;
+
+      padding:120px 8%;
+
+      background:var(--bg-color);
+
+      position:relative;
+    }
+
+    .about-container{
+
+      max-width:1400px;
+
+      margin:auto;
+
+      display:grid;
+
+      grid-template-columns:
+      1.1fr 1fr;
+
+      gap:80px;
+
+      align-items:center;
+    }
+
+    .section-tag{
+
+      color:var(--accent-color);
+
+      font-size:0.9rem;
+      font-weight:600;
+
+      letter-spacing:3px;
+
+      margin-bottom:18px;
+    }
+
+    .section-title{
+
+      font-size:3rem;
+      line-height:1.2;
+
+      font-weight:700;
+
+      color:var(--text-color);
+
+      margin-bottom:28px;
+
+      letter-spacing:-1px;
+    }
+
+    .about-text{
+
+      font-size:1rem;
+      line-height:1.9;
+
+      color:var(--text-light);
+
+      margin-bottom:22px;
+
+      max-width:650px;
+    }
+
+    .about-btn{
+
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+
+      margin-top:12px;
+
+      padding:15px 34px;
+
+      border-radius:50px;
+
+      background:var(--accent-color);
+
+      color:#ffffff;
+
+      font-size:0.95rem;
+      font-weight:600;
+
+      transition:var(--transition);
+
+      box-shadow:
+      0 8px 25px rgba(14,165,164,0.25);
+    }
+
+    .about-btn:hover{
+
+      transform:translateY(-3px);
+
+      opacity:0.95;
+    }
+
+    .about-right{
+
+      display:grid;
+
+      grid-template-columns:
+      repeat(2,1fr);
+
+      gap:24px;
+    }
+
+    .stat-card{
+
+      padding:40px 30px;
+
+      border-radius:24px;
+
+      background:
+      rgba(255,255,255,0.04);
+
+      border:
+      1px solid var(--border-color);
+
+      backdrop-filter:blur(10px);
+
+      transition:var(--transition);
+
+      box-shadow:var(--shadow-light);
+    }
+
+    .stat-card:hover{
+
+      transform:translateY(-8px);
+
+      border-color:
+      rgba(14,165,164,0.35);
+    }
+
+    .stat-number{
+
+      font-size:3rem;
+      font-weight:700;
+
+      color:var(--accent-color);
+
+      margin-bottom:14px;
+    }
+
+    .stat-text{
+
+      font-size:1rem;
+      line-height:1.6;
+
+      color:var(--text-light);
+    }
+
+    /* =========================================
+       ANIMATIONS
+    ========================================= */
+
+    @keyframes fadeUp{
+
+      from{
+        opacity:0;
+        transform:translateY(40px);
+      }
+
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+    }
+
+    @keyframes scrollAnim{
+
+      0%{
+        opacity:1;
+
+        transform:
+        translateX(-50%)
+        translateY(0);
+      }
+
+      100%{
+        opacity:0;
+
+        transform:
+        translateX(-50%)
+        translateY(16px);
+      }
+    }
+
+    /* =========================================
+       RESPONSIVE
+    ========================================= */
+
+    @media(max-width:1100px){
+
+      .about-container{
+
+        grid-template-columns:1fr;
+
+        gap:60px;
+      }
+
+      .section-title{
+        font-size:2.5rem;
+      }
+    }
+
+    @media(max-width:950px){
+
+      .nav-menu{
+
+        position:absolute;
+
+        top:85px;
+        right:0;
+
+        width:100%;
+
+        background:var(--bg-color);
+
+        flex-direction:column;
+
+        padding:30px 0;
+
+        border-bottom:1px solid var(--border-color);
+
+        display:none;
+      }
+
+      .nav-menu.active{
+        display:flex;
+      }
+
+      .menu-toggle{
+        display:block;
+      }
+
+      .brand-name{
+        font-size:0.85rem;
+      }
+
+      .hero-title{
+        font-size:3rem;
+      }
+    }
+
+    @media(max-width:768px){
+
+      .hero{
+        padding:0 6%;
+      }
+
+      .hero-title{
+
+        font-size:2.4rem;
+
+        line-height:1.2;
+      }
+
+      .hero-description{
+
+        font-size:0.95rem;
+
+        line-height:1.8;
+      }
+
+      .btn{
+        width:100%;
+      }
+
+      .hero-buttons{
+        width:100%;
+      }
+
+      .about-section{
+        padding:100px 6%;
+      }
+
+      .section-title{
+        font-size:2rem;
+      }
+
+      .about-right{
+
+        grid-template-columns:1fr;
+      }
+
+      .stat-card{
+
+        padding:35px 28px;
+      }
+
+      .stat-number{
+        font-size:2.5rem;
+      }
+    }
+
+    /* =========================================
+       PROJECTS SECTION
+    ========================================= */
+
+    .projects-section{
+
+      width:100%;
+
+      padding:120px 8%;
+
+      background:var(--bg-color);
+    }
+
+    .projects-container{
+
+      max-width:1400px;
+
+      margin:auto;
+    }
+
+    .projects-header{
+
+      text-align:center;
+
+      margin-bottom:70px;
+    }
+
+    .projects-description{
+
+      max-width:760px;
+
+      margin:auto;
+
+      font-size:1rem;
+      line-height:1.9;
+
+      color:var(--text-light);
+    }
+
+    .projects-grid{
+
+      display:grid;
+
+      grid-template-columns:
+      repeat(3,1fr);
+
+      gap:30px;
+    }
+
+    .project-card{
+
+      position:relative;
+
+      height:520px;
+
+      overflow:hidden;
+
+      border-radius:28px;
+
+      cursor:pointer;
+
+      box-shadow:var(--shadow-light);
+    }
+
+    .project-image{
+
+      width:100%;
+      height:100%;
+
+      object-fit:cover;
+
+      transition:transform 0.6s ease;
+    }
+
+    .project-card:hover .project-image{
+
+      transform:scale(1.08);
+    }
+
+    .project-overlay{
+
+      position:absolute;
+      inset:0;
+
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-end;
+
+      padding:35px;
+
+      background:
+      linear-gradient(
+        to top,
+        rgba(2,6,23,0.92),
+        rgba(2,6,23,0.15)
+      );
+    }
+
+    .project-location{
+
+      display:inline-block;
+
+      width:max-content;
+
+      padding:8px 16px;
+
+      border-radius:50px;
+
+      background:rgba(255,255,255,0.12);
+
+      backdrop-filter:blur(10px);
+
+      color:#ffffff;
+
+      font-size:0.85rem;
+      font-weight:500;
+
+      margin-bottom:20px;
+    }
+
+    .project-title{
+
+      font-size:1.7rem;
+      font-weight:700;
+
+      color:#ffffff;
+
+      margin-bottom:16px;
+    }
+
+    .project-text{
+
+      font-size:0.98rem;
+      line-height:1.8;
+
+      color:rgba(255,255,255,0.82);
+    }
+
+    /* =========================================
+       SERVICES SECTION
+    ========================================= */
+
+    .services-section{
+
+      width:100%;
+
+      padding:120px 8%;
+
+      background:
+      linear-gradient(
+        to bottom,
+        rgba(15,23,42,0.02),
+        rgba(15,23,42,0.04)
+      );
+    }
+
+    .services-container{
+
+      max-width:1400px;
+
+      margin:auto;
+    }
+
+    .services-header{
+
+      text-align:center;
+
+      margin-bottom:70px;
+    }
+
+    .center-title{
+      max-width:850px;
+      margin:auto auto 25px;
+    }
+
+    .services-description{
+
+      max-width:750px;
+
+      margin:auto;
+
+      font-size:1rem;
+      line-height:1.9;
+
+      color:var(--text-light);
+    }
+
+    .services-grid{
+
+      display:grid;
+
+      grid-template-columns:
+      repeat(3,1fr);
+
+      gap:28px;
+    }
+
+    .service-card{
+
+      position:relative;
+
+      padding:45px 35px;
+
+      border-radius:28px;
+
+      background:var(--bg-color);
+
+      border:1px solid var(--border-color);
+
+      overflow:hidden;
+
+      transition:var(--transition);
+
+      box-shadow:var(--shadow-light);
+    }
+
+    .service-card:hover{
+
+      transform:translateY(-10px);
+
+      border-color:
+      rgba(14,165,164,0.35);
+    }
+
+    .service-icon{
+
+      width:70px;
+      height:70px;
+
+      border-radius:20px;
+
+      background:
+      linear-gradient(
+        135deg,
+        var(--accent-color),
+        #164e63
+      );
+
+      display:flex;
+      align-items:center;
+      justify-content:center;
+
+      color:#ffffff;
+
+      font-size:1.5rem;
+
+      margin-bottom:28px;
+    }
+
+    .service-title{
+
+      font-size:1.4rem;
+      font-weight:700;
+
+      color:var(--text-color);
+
+      margin-bottom:18px;
+    }
+
+    .service-text{
+
+      font-size:0.98rem;
+      line-height:1.9;
+
+      color:var(--text-light);
+    }
+
+    @media(max-width:1100px){
+
+      .services-grid{
+        grid-template-columns:repeat(2,1fr);
+      }
+    }
+
+    @media(max-width:768px){
+
+      .services-section{
+        padding:100px 6%;
+      }
+
+      .services-grid{
+        grid-template-columns:1fr;
+      }
+    }
+
+    /* =========================================
+       TESTIMONIALS SECTION
+    ========================================= */
+
+    .testimonials-section,
+    .contact-section{
+      padding:120px 8%;
+    }
+
+    .testimonials-container,
+    .contact-container,
+    .footer-container{
+      max-width:1400px;
+      margin:auto;
+    }
+
+    .testimonials-header{
+      text-align:center;
+      margin-bottom:70px;
+    }
+
+    .testimonials-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:28px;
+    }
+
+    .testimonial-card{
+      padding:40px 35px;
+      border-radius:28px;
+      background:var(--bg-color);
+      border:1px solid var(--border-color);
+      box-shadow:var(--shadow-light);
+      transition:var(--transition);
+    }
+
+    .testimonial-card:hover{
+      transform:translateY(-8px);
+    }
+
+    .testimonial-stars{
+      color:#f59e0b;
+      margin-bottom:24px;
+    }
+
+    .testimonial-text{
+      line-height:1.9;
+      color:var(--text-light);
+      margin-bottom:30px;
+    }
+
+    .testimonial-user{
+      display:flex;
+      align-items:center;
+      gap:16px;
+    }
+
+    .testimonial-avatar{
+      width:55px;
+      height:55px;
+      border-radius:50%;
+      background:var(--accent-color);
+      color:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:700;
+    }
+
+    .testimonial-name{
+      margin-bottom:5px;
+    }
+
+    .testimonial-role{
+      color:var(--text-light);
+      font-size:0.92rem;
+    }
+
+    /* CONTACT */
+
+    .contact-container{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:60px;
+      align-items:center;
+    }
+
+    .contact-text{
+      line-height:1.9;
+      color:var(--text-light);
+      margin-bottom:35px;
+    }
+
+    .contact-info{
+      display:flex;
+      flex-direction:column;
+      gap:22px;
+    }
+
+    .contact-item{
+      display:flex;
+      align-items:center;
+      gap:18px;
+      color:var(--text-color);
+    }
+
+    .contact-item i{
+      width:50px;
+      height:50px;
+      border-radius:16px;
+      background:var(--accent-color);
+      color:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .contact-form{
+      display:flex;
+      flex-direction:column;
+      gap:22px;
+      padding:45px;
+      border-radius:30px;
+      background:var(--bg-color);
+      border:1px solid var(--border-color);
+      box-shadow:var(--shadow-light);
+    }
+
+    .form-group input,
+    .form-group textarea{
+      width:100%;
+      padding:18px 20px;
+      border-radius:16px;
+      border:1px solid var(--border-color);
+      background:transparent;
+      color:var(--text-color);
+      outline:none;
+      font-family:inherit;
+    }
+
+    .form-group textarea{
+      min-height:160px;
+      resize:none;
+    }
+
+    .contact-btn{
+      padding:16px;
+      border:none;
+      border-radius:50px;
+      background:var(--accent-color);
+      color:#fff;
+      cursor:pointer;
+      font-weight:600;
+      transition:var(--transition);
+    }
+
+    .contact-btn:hover{
+      transform:translateY(-3px);
+    }
+
+    /* FOOTER */
+
+    .footer{
+      padding:90px 8% 40px;
+      background:#020617;
+      color:#cbd5e1;
+    }
+
+    .footer-top{
+      display:grid;
+      grid-template-columns:2fr 1fr 1fr;
+      gap:50px;
+      margin-bottom:60px;
+    }
+
+    .footer-logo{
+      width:60px;
+      height:60px;
+      border-radius:18px;
+      background:var(--accent-color);
+      color:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:700;
+      margin-bottom:22px;
+    }
+
+    .footer-title{
+      margin-bottom:18px;
+      color:#fff;
+      letter-spacing:2px;
+    }
+
+    .footer-description{
+      line-height:1.9;
+      max-width:450px;
+    }
+
+    .footer-links h4,
+    .footer-socials h4{
+      margin-bottom:22px;
+      color:#fff;
+    }
+
+    .footer-links ul{
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+    }
+
+    .social-icons{
+      display:flex;
+      gap:16px;
+    }
+
+    .social-icons a{
+      width:48px;
+      height:48px;
+      border-radius:14px;
+      background:rgba(255,255,255,0.08);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      transition:var(--transition);
+    }
+
+    .social-icons a:hover{
+      background:var(--accent-color);
+    }
+
+    .footer-bottom{
+      padding-top:35px;
+      border-top:1px solid rgba(255,255,255,0.08);
+      text-align:center;
+      font-size:0.92rem;
+    }
+
+    @media(max-width:1100px){
+
+      .projects-grid,
+      .services-grid,
+      .testimonials-grid{
+        grid-template-columns:repeat(2,1fr);
+      }
+
+      .contact-container,
+      .footer-top{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media(max-width:768px){
+
+      .projects-grid,
+      .services-grid,
+      .testimonials-grid{
+        grid-template-columns:1fr;
+      }
+
+      .testimonials-section,
+      .contact-section,
+      .footer{
+        padding-left:6%;
+        padding-right:6%;
+      }
+    }
+
+    @media(max-width:480px){
+
+      .hero-title{
+        font-size:2rem;
+      }
+
+      .section-title{
+        font-size:1.7rem;
+      }
+
+      .about-text{
+        font-size:0.95rem;
+      }
+
+      .service-card{
+        padding:38px 28px;
+      }
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <!-- =========================================
+       NAVBAR
+  ========================================= -->
+
+  <header class="navbar">
+
+    <div class="nav-container">
+
+      <!-- LEFT -->
+      <div class="nav-left">
+
+        <div class="logo-box">
+          MC
+        </div>
+
+        <div class="brand-name">
+          MANTALET CONSULTANTS
+        </div>
+
+      </div>
+
+      <!-- RIGHT -->
+      <div class="nav-right">
+
+        <!-- MENU -->
+        <ul class="nav-menu" id="navMenu">
+
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#testimonials">Testimonials</a></li>
+          <li><a href="#contact">Contact</a></li>
+
+        </ul>
+
+        <!-- THEME TOGGLE -->
+        <button class="theme-toggle" id="themeToggle">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+
+        <!-- MOBILE MENU -->
+        <div class="menu-toggle" id="menuToggle">
+          <i class="fa-solid fa-bars"></i>
+        </div>
+
+      </div>
+
+    </div>
+
+  </header>
+
+  <!-- =========================================
+       HERO SECTION
+  ========================================= -->
+
+  <section class="hero" id="hero">
+
+    <!-- OVERLAY -->
+    <div class="hero-overlay"></div>
+
+    <!-- CONTENT -->
+    <div class="hero-content">
+
+      <p class="hero-subtitle">
+        PROFESSIONAL CONSTRUCTION CONSULTANCY
+      </p>
+
+      <h1 class="hero-title">
+        PROFESSIONAL QUANTITY SURVEYING &
+        CONSTRUCTION CONSULTANCY
+      </h1>
+
+      <p class="hero-description">
+        Delivering precision-driven cost management,
+        project planning, tender documentation,
+        and construction consultancy solutions
+        across Kenya.
+      </p>
+
+      <!-- BUTTONS -->
+      <div class="hero-buttons">
+
+        <a href="#" class="btn btn-primary">
+          View Projects
+        </a>
+
+        <a href="#" class="btn btn-secondary">
+          Contact Us
+        </a>
+
+      </div>
+
+    </div>
+
+    <!-- SCROLL INDICATOR -->
+    <div class="scroll-indicator">
+      <span></span>
+    </div>
+
+  </section>
+
+  <!-- =========================================
+       ABOUT SECTION
+  ========================================= -->
+
+  <section class="about-section" id="about">
+
+    <div class="about-container">
+
+      <!-- LEFT SIDE -->
+      <div class="about-left">
+
+        <p class="section-tag">
+          ABOUT MANTALET CONSULTANTS
+        </p>
+
+        <h2 class="section-title">
+          Delivering Precision-Driven Construction Consultancy Solutions
+        </h2>
+
+        <p class="about-text">
+          MANTALET CONSULTANTS is a professional quantity surveying
+          and construction consultancy firm committed to delivering
+          cost-effective, transparent, and technically sound project
+          solutions across Kenya.
+        </p>
+
+        <p class="about-text">
+          Our expertise spans cost estimation, project planning,
+          tender documentation, contract administration, and
+          strategic cost management for commercial, residential,
+          and infrastructure developments.
+        </p>
+
+        <a href="#" class="about-btn">
+          Learn More
+        </a>
+
+      </div>
+
+      <!-- RIGHT SIDE -->
+      <div class="about-right">
+
+        <div class="stat-card">
+
+          <h3 class="stat-number" data-target="12">
+            0
+          </h3>
+
+          <p class="stat-text">
+            Years of Experience
+          </p>
+
+        </div>
+
+        <div class="stat-card">
+
+          <h3 class="stat-number" data-target="85">
+            0
+          </h3>
+
+          <p class="stat-text">
+            Projects Completed
+          </p>
+
+        </div>
+
+        <div class="stat-card">
+
+          <h3 class="stat-number" data-target="98">
+            0
+          </h3>
+
+          <p class="stat-text">
+            Client Satisfaction
+          </p>
+
+        </div>
+
+        <div class="stat-card">
+
+          <h3 class="stat-number" data-target="15">
+            0
+          </h3>
+
+          <p class="stat-text">
+            Professional Team Members
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- =========================================
+       PROJECTS SECTION
+  ========================================= -->
+
+  <section class="projects-section" id="projects">
+
+    <div class="projects-container">
+
+      <!-- SECTION HEADER -->
+      <div class="projects-header">
+
+        <p class="section-tag">
+          FEATURED PROJECTS
+        </p>
+
+        <h2 class="section-title center-title">
+          Delivering Excellence Across Diverse Construction Developments
+        </h2>
+
+        <p class="projects-description">
+          Explore some of the large-scale commercial, residential,
+          and mixed-use developments supported through our precision-driven
+          consultancy and quantity surveying expertise.
+        </p>
+
+      </div>
+
+      <!-- PROJECTS GRID -->
+      <div class="projects-grid">
+
+        <!-- PROJECT 1 -->
+        <div class="project-card">
+
+          <img
+            src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1200&auto=format&fit=crop"
+            alt="Commercial High Rise"
+            class="project-image"
+          >
+
+          <div class="project-overlay">
+
+            <span class="project-location">
+              Nairobi, Kenya
+            </span>
+
+            <h3 class="project-title">
+              Commercial Office Tower
+            </h3>
+
+            <p class="project-text">
+              Quantity surveying and cost management consultancy for a modern multi-storey commercial development.
+            </p>
+
+          </div>
+
+        </div>
+
+        <!-- PROJECT 2 -->
+        <div class="project-card">
+
+          <img
+            src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?q=80&w=1200&auto=format&fit=crop"
+            alt="Residential Estate"
+            class="project-image"
+          >
+
+          <div class="project-overlay">
+
+            <span class="project-location">
+              Kiambu, Kenya
+            </span>
+
+            <h3 class="project-title">
+              Residential Estate Development
+            </h3>
+
+            <p class="project-text">
+              Budget planning and contract administration for a premium gated residential community.
+            </p>
+
+          </div>
+
+        </div>
+
+        <!-- PROJECT 3 -->
+        <div class="project-card">
+
+          <img
+            src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=1200&auto=format&fit=crop"
+            alt="Mixed Use Development"
+            class="project-image"
+          >
+
+          <div class="project-overlay">
+
+            <span class="project-location">
+              Westlands, Nairobi
+            </span>
+
+            <h3 class="project-title">
+              Mixed-Use Development
+            </h3>
+
+            <p class="project-text">
+              Comprehensive cost consultancy and project coordination for a modern mixed-use urban complex.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- =========================================
+       SERVICES SECTION
+  ========================================= -->
+
+  <section class="services-section" id="services">
+
+    <div class="services-container">
+
+      <!-- SECTION HEADER -->
+      <div class="services-header">
+
+        <p class="section-tag">
+          OUR SERVICES
+        </p>
+
+        <h2 class="section-title center-title">
+          Professional Construction Consultancy Services
+        </h2>
+
+        <p class="services-description">
+          We deliver strategic quantity surveying and construction consultancy
+          solutions tailored to commercial, residential, and infrastructure projects.
+        </p>
+
+      </div>
+
+      <!-- SERVICES GRID -->
+      <div class="services-grid">
+
+        <!-- CARD 1 -->
+        <div class="service-card">
+
+          <div class="service-icon">
+            <i class="fa-solid fa-calculator"></i>
+          </div>
+
+          <h3 class="service-title">
+            Cost Estimation
+          </h3>
+
+          <p class="service-text">
+            Accurate project costing and feasibility analysis to ensure effective budgeting and financial planning.
+          </p>
+
+        </div>
+
+        <!-- CARD 2 -->
+        <div class="service-card">
+
+          <div class="service-icon">
+            <i class="fa-solid fa-chart-line"></i>
+          </div>
+
+          <h3 class="service-title">
+            Budget Planning
+          </h3>
+
+          <p class="service-text">
+            Strategic financial planning solutions designed to maximize cost efficiency and project sustainability.
+          </p>
+
+        </div>
+
+        <!-- CARD 3 -->
+        <div class="service-card">
+
+          <div class="service-icon">
+            <i class="fa-solid fa-file-signature"></i>
+          </div>
+
+          <h3 class="service-title">
+            Tender Documentation
+          </h3>
+
+          <p class="service-text">
+            Preparation of professional tender documents, bills of quantities, and procurement support services.
+          </p>
+
+        </div>
+
+        <!-- CARD 4 -->
+        <div class="service-card">
+
+          <div class="service-icon">
+            <i class="fa-solid fa-coins"></i>
+          </div>
+
+          <h3 class="service-title">
+            Cost Control
+          </h3>
+
+          <p class="service-text">
+            Continuous project cost monitoring and financial reporting to maintain budget discipline throughout execution.
+          </p>
+
+        </div>
+
+        <!-- CARD 5 -->
+        <div class="service-card">
+
+          <div class="service-icon">
+            <i class="fa-solid fa-building"></i>
+          </div>
+
+          <h3 class="service-title">
+            Project Management
+          </h3>
+
+          <p class="service-text">
+            Coordinated project oversight ensuring quality delivery, timeline management, and operational efficiency.
+          </p>
+
+        </div>
+
+        <!-- CARD 6 -->
+        <div class="service-card">
+
+          <div class="service-icon">
+            <i class="fa-solid fa-scale-balanced"></i>
+          </div>
+
+          <h3 class="service-title">
+            Contract Administration
+          </h3>
+
+          <p class="service-text">
+            Professional administration of construction contracts, certifications, valuations, and compliance procedures.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- =========================================
+       TESTIMONIALS SECTION
+  ========================================= -->
+
+  <section class="testimonials-section" id="testimonials">
+
+    <div class="testimonials-container">
+
+      <!-- HEADER -->
+      <div class="testimonials-header">
+
+        <p class="section-tag">
+          CLIENT TESTIMONIALS
+        </p>
+
+        <h2 class="section-title center-title">
+          Trusted By Developers, Investors & Construction Stakeholders
+        </h2>
+
+      </div>
+
+      <!-- TESTIMONIAL GRID -->
+      <div class="testimonials-grid">
+
+        <!-- TESTIMONIAL 1 -->
+        <div class="testimonial-card">
+
+          <div class="testimonial-stars">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+
+          <p class="testimonial-text">
+            MANTALET CONSULTANTS demonstrated exceptional professionalism and precision throughout our commercial development project.
+          </p>
+
+          <div class="testimonial-user">
+
+            <div class="testimonial-avatar">
+              JM
+            </div>
+
+            <div>
+              <h4 class="testimonial-name">
+                James Mwangi
+              </h4>
+
+              <p class="testimonial-role">
+                Property Developer
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- TESTIMONIAL 2 -->
+        <div class="testimonial-card">
+
+          <div class="testimonial-stars">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+
+          <p class="testimonial-text">
+            Their cost management expertise significantly improved project efficiency and ensured strict budget control.
+          </p>
+
+          <div class="testimonial-user">
+
+            <div class="testimonial-avatar">
+              AK
+            </div>
+
+            <div>
+              <h4 class="testimonial-name">
+                Anne Kariuki
+              </h4>
+
+              <p class="testimonial-role">
+                Construction Investor
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- TESTIMONIAL 3 -->
+        <div class="testimonial-card">
+
+          <div class="testimonial-stars">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+
+          <p class="testimonial-text">
+            Professional, responsive, and technically sound consultancy services delivered from project initiation to completion.
+          </p>
+
+          <div class="testimonial-user">
+
+            <div class="testimonial-avatar">
+              DN
+            </div>
+
+            <div>
+              <h4 class="testimonial-name">
+                David Njoroge
+              </h4>
+
+              <p class="testimonial-role">
+                Infrastructure Client
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- =========================================
+       CONTACT SECTION
+  ========================================= -->
+
+  <section class="contact-section" id="contact">
+
+    <div class="contact-container">
+
+      <!-- LEFT -->
+      <div class="contact-left">
+
+        <p class="section-tag">
+          CONTACT US
+        </p>
+
+        <h2 class="section-title">
+          Let’s Discuss Your Next Construction Project
+        </h2>
+
+        <p class="contact-text">
+          Reach out to MANTALET CONSULTANTS for professional quantity surveying and construction consultancy solutions.
+        </p>
+
+        <div class="contact-info">
+
+          <div class="contact-item">
+            <i class="fa-solid fa-envelope"></i>
+            <span>info@mantaletconsultants.com</span>
+          </div>
+
+          <div class="contact-item">
+            <i class="fa-solid fa-phone"></i>
+            <span>+254 724 411 574</span>
+          </div>
+
+          <div class="contact-item">
+            <i class="fa-solid fa-location-dot"></i>
+            <span>Spur Mall, Kimbo, Kenya</span>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- RIGHT -->
+      <div class="contact-right">
+
+        <form class="contact-form">
+
+          <div class="form-group">
+            <input type="text" placeholder="Full Name" required>
+          </div>
+
+          <div class="form-group">
+            <input type="email" placeholder="Email Address" required>
+          </div>
+
+          <div class="form-group">
+            <input type="text" placeholder="Project Type">
+          </div>
+
+          <div class="form-group">
+            <textarea placeholder="Your Message"></textarea>
+          </div>
+
+          <button type="submit" class="contact-btn">
+            Send Message
+          </button>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- =========================================
+       FOOTER
+  ========================================= -->
+
+  <footer class="footer">
+
+    <div class="footer-container">
+
+      <div class="footer-top">
+
+        <!-- BRAND -->
+        <div class="footer-brand">
+
+          <div class="footer-logo">
+            MC
+          </div>
+
+          <h3 class="footer-title">
+            MANTALET CONSULTANTS
+          </h3>
+
+          <p class="footer-description">
+            Professional quantity surveying and construction consultancy solutions focused on precision, transparency, and project excellence.
+          </p>
+
+        </div>
+
+        <!-- LINKS -->
+        <div class="footer-links">
+
+          <h4>Quick Links</h4>
+
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Projects</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+
+        </div>
+
+        <!-- SOCIALS -->
+        <div class="footer-socials">
+
+          <h4>Follow Us</h4>
+
+          <div class="social-icons">
+
+            <a href="#">
+              <i class="fa-brands fa-linkedin-in"></i>
+            </a>
+
+            <a href="#">
+              <i class="fa-brands fa-facebook-f"></i>
+            </a>
+
+            <a href="#">
+              <i class="fa-brands fa-instagram"></i>
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        © 2026 MANTALET CONSULTANTS. All Rights Reserved.
+      </div>
+
+    </div>
+
+  </footer>
+
+  <script>
+
+    /* =========================================
+       THEME TOGGLE
+    ========================================= */
+
+    const themeToggle =
+    document.getElementById("themeToggle");
+
+    const body =
+    document.body;
+
+    if(localStorage.getItem("theme") === "dark"){
+
+      body.classList.add("dark-mode");
+
+      themeToggle.innerHTML =
+      '<i class="fa-solid fa-sun"></i>';
+    }
+
+    themeToggle.addEventListener("click", () => {
+
+      body.classList.toggle("dark-mode");
+
+      if(body.classList.contains("dark-mode")){
+
+        localStorage.setItem("theme", "dark");
+
+        themeToggle.innerHTML =
+        '<i class="fa-solid fa-sun"></i>';
+
+      }else{
+
+        localStorage.setItem("theme", "light");
+
+        themeToggle.innerHTML =
+        '<i class="fa-solid fa-moon"></i>';
+      }
+
+    });
+
+    /* =========================================
+       MOBILE MENU
+    ========================================= */
+
+    const menuToggle =
+    document.getElementById("menuToggle");
+
+    const navMenu =
+    document.getElementById("navMenu");
+
+    menuToggle.addEventListener("click", () => {
+      navMenu.classList.toggle("active");
+    });
+
+    /* =========================================
+       HERO PARALLAX EFFECT
+    ========================================= */
+
+    const hero =
+    document.querySelector(".hero");
+
+    window.addEventListener("scroll", () => {
+
+      const scrollY =
+      window.scrollY;
+
+      hero.style.backgroundPositionY =
+      `${scrollY * 0.4}px`;
+
+    });
+
+    /* =========================================
+       ANIMATED COUNTER EFFECT
+    ========================================= */
+
+    const counters =
+    document.querySelectorAll(".stat-number");
+
+    const speed = 200;
+
+    const startCounters = () => {
+
+      counters.forEach(counter => {
+
+        const updateCount = () => {
+
+          const target =
+          +counter.getAttribute("data-target");
+
+          const count =
+          +counter.innerText;
+
+          const increment =
+          target / speed;
+
+          if(count < target){
+
+            counter.innerText =
+            Math.ceil(count + increment);
+
+            setTimeout(updateCount, 10);
+
+          }else{
+
+            counter.innerText =
+            target;
+          }
+        };
+
+        updateCount();
+      });
+    };
+
+    const aboutSection =
+    document.querySelector(".about-section");
+
+    const observer =
+    new IntersectionObserver(entries => {
+
+      entries.forEach(entry => {
+
+        if(entry.isIntersecting){
+
+          startCounters();
+
+          observer.unobserve(entry.target);
+        }
+      });
+
+    },{
+      threshold:0.5
+    });
+
+    observer.observe(aboutSection);
+
+    /* =========================================
+       LOAD DATA FROM LOCAL STORAGE
+    ========================================= */
+
+    // Load projects from localStorage
+    function loadProjects() {
+      const projects = JSON.parse(localStorage.getItem('projects')) || [
+        {
+          title: 'Commercial Office Tower',
+          location: 'Nairobi, Kenya',
+          desc: 'Quantity surveying and cost management consultancy for a modern multi-storey commercial development.',
+          image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1200&auto=format&fit=crop'
+        },
+        {
+          title: 'Residential Estate Development',
+          location: 'Kiambu, Kenya',
+          desc: 'Budget planning and contract administration for a premium gated residential community.',
+          image: 'https://images.unsplash.com/photo-1511818966892-d7d671e672a2?q=80&w=1200&auto=format&fit=crop'
+        },
+        {
+          title: 'Mixed-Use Development',
+          location: 'Westlands, Nairobi',
+          desc: 'Comprehensive cost consultancy and project coordination for a modern mixed-use urban complex.',
+          image: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=1200&auto=format&fit=crop'
+        }
+      ];
+
+      const projectsGrid = document.querySelector('.projects-grid');
+      if (projectsGrid && projects.length > 0) {
+        projectsGrid.innerHTML = projects.map(project => `
+          <div class="project-card">
+            <img
+              src="${project.image || 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1200&auto=format&fit=crop'}"
+              alt="${project.title}"
+              class="project-image"
+            >
+            <div class="project-overlay">
+              <span class="project-location">
+                ${project.location}
+              </span>
+              <h3 class="project-title">
+                ${project.title}
+              </h3>
+              <p class="project-text">
+                ${project.desc}
+              </p>
+            </div>
+          </div>
+        `).join('');
+      }
+    }
+
+    // Load services from localStorage
+    function loadServices() {
+      const services = JSON.parse(localStorage.getItem('services')) || [
+        {
+          title: 'Cost Estimation',
+          desc: 'Accurate project costing and feasibility analysis to ensure effective budgeting and financial planning.',
+          icon: 'fa-calculator'
+        },
+        {
+          title: 'Budget Planning',
+          desc: 'Strategic financial planning solutions designed to maximize cost efficiency and project sustainability.',
+          icon: 'fa-chart-line'
+        },
+        {
+          title: 'Tender Documentation',
+          desc: 'Preparation of professional tender documents, bills of quantities, and procurement support services.',
+          icon: 'fa-file-signature'
+        },
+        {
+          title: 'Cost Control',
+          desc: 'Continuous project cost monitoring and financial reporting to maintain budget discipline throughout execution.',
+          icon: 'fa-coins'
+        },
+        {
+          title: 'Project Management',
+          desc: 'Coordinated project oversight ensuring quality delivery, timeline management, and operational efficiency.',
+          icon: 'fa-building'
+        },
+        {
+          title: 'Contract Administration',
+          desc: 'Professional administration of construction contracts, certifications, valuations, and compliance procedures.',
+          icon: 'fa-scale-balanced'
+        }
+      ];
+
+      const servicesGrid = document.querySelector('.services-grid');
+      if (servicesGrid && services.length > 0) {
+        servicesGrid.innerHTML = services.map(service => `
+          <div class="service-card">
+            <div class="service-icon">
+              <i class="fa-solid ${service.icon || 'fa-calculator'}"></i>
+            </div>
+            <h3 class="service-title">
+              ${service.title}
+            </h3>
+            <p class="service-text">
+              ${service.desc}
+            </p>
+          </div>
+        `).join('');
+      }
+    }
+
+    // Load testimonials from localStorage
+    function loadTestimonials() {
+      const testimonials = JSON.parse(localStorage.getItem('testimonials')) || [
+        {
+          name: 'James Mwangi',
+          role: 'Property Developer',
+          msg: 'MANTALET CONSULTANTS demonstrated exceptional professionalism and precision throughout our commercial development project.',
+          initials: 'JM'
+        },
+        {
+          name: 'Anne Kariuki',
+          role: 'Construction Investor',
+          msg: 'Their cost management expertise significantly improved project efficiency and ensured strict budget control.',
+          initials: 'AK'
+        },
+        {
+          name: 'David Njoroge',
+          role: 'Infrastructure Client',
+          msg: 'Professional, responsive, and technically sound consultancy services delivered from project initiation to completion.',
+          initials: 'DN'
+        }
+      ];
+
+      const testimonialsGrid = document.querySelector('.testimonials-grid');
+      if (testimonialsGrid && testimonials.length > 0) {
+        testimonialsGrid.innerHTML = testimonials.map(testimonial => `
+          <div class="testimonial-card">
+            <div class="testimonial-stars">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+            </div>
+            <p class="testimonial-text">
+              ${testimonial.msg}
+            </p>
+            <div class="testimonial-user">
+              <div class="testimonial-avatar">
+                ${testimonial.initials || testimonial.name.split(' ').map(n => n[0]).join('')}
+              </div>
+              <div>
+                <h4 class="testimonial-name">
+                  ${testimonial.name}
+                </h4>
+                <p class="testimonial-role">
+                  ${testimonial.role}
+                </p>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+    }
+
+    // Load stats from localStorage
+    function loadStats() {
+      const stats = JSON.parse(localStorage.getItem('stats')) || {
+        years: 12,
+        projectsDone: 85,
+        satisfaction: 98,
+        team: 15
+      };
+
+      const statNumbers = document.querySelectorAll('.stat-number');
+      if (statNumbers.length >= 4) {
+        statNumbers[0].setAttribute('data-target', stats.years || 12);
+        statNumbers[1].setAttribute('data-target', stats.projectsDone || 85);
+        statNumbers[2].setAttribute('data-target', stats.satisfaction || 98);
+        statNumbers[3].setAttribute('data-target', stats.team || 15);
+      }
+    }
+
+    // Load contact info from localStorage
+    function loadContactInfo() {
+      const contactInfo = JSON.parse(localStorage.getItem('contactInfo')) || {
+        email: 'info@mantaletconsultants.com',
+        phone: '+254 724 411 574',
+        location: 'Spur Mall, Kimbo, Kenya'
+      };
+
+      const contactItems = document.querySelectorAll('.contact-item');
+      if (contactItems.length >= 3) {
+        contactItems[0].querySelector('span').textContent = contactInfo.email;
+        contactItems[1].querySelector('span').textContent = contactInfo.phone;
+        contactItems[2].querySelector('span').textContent = contactInfo.location;
+      }
+    }
+
+    // Load all data on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      loadProjects();
+      loadServices();
+      loadTestimonials();
+      loadStats();
+      loadContactInfo();
+    });
+
+    // Listen for storage changes to update content in real-time
+    window.addEventListener('storage', (e) => {
+      if (e.key === 'projects') loadProjects();
+      if (e.key === 'services') loadServices();
+      if (e.key === 'testimonials') loadTestimonials();
+      if (e.key === 'stats') loadStats();
+      if (e.key === 'contactInfo') loadContactInfo();
+    });
+
+  </script>
+
+</body>
+</html>
