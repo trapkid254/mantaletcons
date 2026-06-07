@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page Not Found — Mantelet Consultants</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;1,300;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--teal:#0d9488;--teal-d:#0f766e;--teal-l:#2dd4bf;--teal-ll:#99f6e4;--dark:#042f2e;}
+[data-theme="light"]{--bg:#f0fdfa;--text-h:#042f2e;--text-m:#0f766e;--text-s:#5eead4}
+[data-theme="dark"]{--bg:#042f2e;--text-h:#f0fdfa;--text-m:#2dd4bf;--text-s:#0d9488}
+html,body{height:100%;font-family:'Outfit',system-ui,sans-serif;background:var(--bg);color:var(--text-m);transition:background .3s,color .3s;-webkit-font-smoothing:antialiased}
+body{display:flex;align-items:center;justify-content:center;min-height:100vh;overflow:hidden;position:relative;padding:2rem}
+
+.bg-mesh{position:absolute;inset:0;background-image:linear-gradient(rgba(13,148,136,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(13,148,136,.04) 1px,transparent 1px);background-size:60px 60px;pointer-events:none}
+.bg-num{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Cormorant',serif;font-size:min(40vw,380px);font-weight:300;color:rgba(13,148,136,.06);line-height:1;user-select:none;white-space:nowrap;pointer-events:none}
+
+.card{position:relative;z-index:1;text-align:center;max-width:520px}
+.gem{
+  width:64px;height:64px;
+  background:linear-gradient(135deg,var(--teal-d),var(--teal),var(--teal-l));
+  clip-path:polygon(50% 0%,93% 25%,93% 75%,50% 100%,7% 75%,7% 25%);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Cormorant',serif;font-size:1.75rem;font-weight:400;color:#fff;
+  margin:0 auto 2rem;
+  animation:gemRock 4s ease-in-out infinite;
+  filter:drop-shadow(0 8px 24px rgba(13,148,136,.35));
+}
+@keyframes gemRock{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(5deg)}}
+
+.err-code{font-family:'Cormorant',serif;font-size:1rem;font-weight:400;letter-spacing:.25em;color:var(--teal);text-transform:uppercase;margin-bottom:.75rem;display:block}
+.title{font-family:'Cormorant',serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:300;line-height:1.1;color:var(--text-h);margin-bottom:1.25rem}
+.title em{font-style:italic;color:var(--teal-l)}
+.sub{font-size:1rem;line-height:1.75;color:var(--text-m);font-weight:300;margin-bottom:2.5rem;max-width:400px;margin-left:auto;margin-right:auto}
+
+.btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:.55rem;font-family:'Outfit',sans-serif;font-size:.8rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:.85rem 2rem;border:1.5px solid transparent;transition:all .3s;text-decoration:none;border-radius:2px}
+.btn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;transition:transform .3s}
+.btn:hover svg{transform:translateX(3px)}
+.btn-primary{background:var(--teal);color:#fff;border-color:var(--teal)}
+.btn-primary:hover{background:var(--teal-d)}
+.btn-ghost{background:transparent;color:var(--text-h);border-color:rgba(13,148,136,.3)}
+.btn-ghost:hover{border-color:var(--teal);color:var(--teal)}
+
+.divider{width:40px;height:1.5px;background:var(--teal);margin:2.5rem auto}
+.links-row{display:flex;gap:2rem;justify-content:center;flex-wrap:wrap}
+.quick-link{font-size:.8rem;color:var(--text-m);text-decoration:none;transition:color .2s;display:flex;align-items:center;gap:.35rem}
+.quick-link svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2}
+.quick-link:hover{color:var(--teal)}
+</style>
+</head>
+<body>
+<div class="bg-mesh"></div>
+<div class="bg-num">404</div>
+
+<div class="card">
+  <div class="gem">M</div>
+  <span class="err-code">Error 404 — Page Not Found</span>
+  <h1 class="title">This page seems to have<br>gone <em>off-plan</em></h1>
+  <p class="sub">The page you're looking for may have been moved, renamed, or is temporarily unavailable. Let's get you back on track.</p>
+  <div class="btns">
+    <a href="index.html" class="btn btn-primary">Back to Home <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></a>
+    <a href="index.html#contact" class="btn btn-ghost">Contact Us <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+  </div>
+  <div class="divider"></div>
+  <div class="links-row">
+    <a href="index.html#about" class="quick-link"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>About Us</a>
+    <a href="index.html#services" class="quick-link"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>Services</a>
+    <a href="index.html#projects" class="quick-link"><svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>Projects</a>
+    <a href="admin/login.html" class="quick-link"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>Admin</a>
+  </div>
+</div>
+<script>
+  const saved = localStorage.getItem('mc-theme')||'light';
+  document.documentElement.setAttribute('data-theme',saved);
+</script>
+</body>
+</html>

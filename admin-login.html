@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Login — Mantelet Consultants</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;font-family:'DM Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+:root{
+  --teal:#14b8a6;--teal-d:#0d9488;--teal-l:#5eead4;--teal-pale:#f0fdf9;
+  --dark:#042f2e;--dark2:#0c2321;
+  --white:#fff;--border:rgba(20,184,166,.18);
+}
+body{background:var(--dark);display:flex;align-items:center;justify-content:center;min-height:100vh;overflow:hidden;position:relative}
+
+/* animated bg mesh */
+.bg-mesh{position:absolute;inset:0;background-image:linear-gradient(rgba(20,184,166,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(20,184,166,.04) 1px,transparent 1px);background-size:60px 60px}
+.bg-glow{position:absolute;top:-20%;left:50%;transform:translateX(-50%);width:700px;height:700px;background:radial-gradient(circle,rgba(20,184,166,.12) 0%,transparent 65%);pointer-events:none}
+.bg-glow2{position:absolute;bottom:-30%;right:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(6,182,212,.08) 0%,transparent 65%);pointer-events:none}
+
+/* card */
+.card{
+  position:relative;z-index:1;
+  width:100%;max-width:420px;
+  background:rgba(12,35,33,.85);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border:1px solid rgba(20,184,166,.15);
+  padding:2.75rem 2.5rem;
+  box-shadow:0 32px 80px rgba(0,0,0,.45);
+  margin:1.5rem;
+}
+
+/* logo */
+.logo{display:flex;align-items:center;gap:.75rem;justify-content:center;margin-bottom:2.25rem}
+.logo-gem{
+  width:44px;height:44px;
+  background:linear-gradient(135deg,var(--teal-d),var(--teal));
+  clip-path:polygon(50% 0%,93% 25%,93% 75%,50% 100%,7% 75%,7% 25%);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Syne',sans-serif;font-size:1.35rem;font-weight:700;color:#fff;
+  flex-shrink:0;
+  filter:drop-shadow(0 4px 12px rgba(20,184,166,.4));
+}
+.logo-text{text-align:left}
+.logo-name{font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:700;color:#fff;display:block}
+.logo-sub{font-size:.6rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.3);display:block;margin-top:1px}
+
+/* heading */
+.login-title{font-family:'Syne',sans-serif;font-size:1.35rem;font-weight:700;color:#f0fdfa;text-align:center;margin-bottom:.35rem}
+.login-sub{font-size:.855rem;color:rgba(255,255,255,.35);text-align:center;margin-bottom:2rem;font-weight:300;line-height:1.6}
+
+/* form */
+.fg{margin-bottom:1.2rem;position:relative}
+.fl{display:block;font-size:.66rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.38);margin-bottom:.42rem}
+.fi{
+  width:100%;background:rgba(255,255,255,.04);
+  border:1.5px solid rgba(255,255,255,.08);
+  padding:.82rem 1rem;
+  font-family:'DM Sans',sans-serif;font-size:.9375rem;
+  color:#fff;outline:none;
+  transition:border-color .25s,background .25s,box-shadow .25s;
+}
+.fi::placeholder{color:rgba(255,255,255,.2)}
+.fi:focus{border-color:var(--teal);background:rgba(20,184,166,.06);box-shadow:0 0 0 3px rgba(20,184,166,.12)}
+.fi-pw-wrap{position:relative}
+.fi-pw-wrap .fi{padding-right:3rem}
+.pw-toggle{
+  position:absolute;right:.75rem;top:50%;transform:translateY(-50%);
+  background:none;border:none;cursor:pointer;padding:4px;
+  color:rgba(255,255,255,.3);transition:color .2s;
+}
+.pw-toggle:hover{color:var(--teal-l)}
+.pw-toggle svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.8}
+
+/* submit */
+.login-btn{
+  width:100%;background:linear-gradient(135deg,var(--teal-d),var(--teal));
+  color:#fff;border:none;padding:1.05rem;
+  font-family:'DM Sans',sans-serif;font-size:.875rem;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;cursor:pointer;
+  transition:opacity .25s,transform .2s;margin-top:.5rem;
+  display:flex;align-items:center;justify-content:center;gap:.6rem;
+  box-shadow:0 4px 20px rgba(20,184,166,.25);
+}
+.login-btn:hover{opacity:.9;transform:translateY(-1px)}
+.login-btn:active{transform:none}
+.login-btn svg{width:17px;height:17px;stroke:#fff;fill:none;stroke-width:2}
+.login-btn.loading{opacity:.7;pointer-events:none}
+
+/* error */
+.error-msg{
+  background:rgba(220,38,38,.1);border:1px solid rgba(220,38,38,.25);
+  color:#fca5a5;font-size:.83rem;padding:.75rem 1rem;
+  margin-bottom:1.25rem;display:none;line-height:1.5;
+}
+.error-msg.show{display:block}
+
+/* hint */
+.login-hint{margin-top:1.75rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.06);text-align:center}
+.login-hint p{font-size:.76rem;color:rgba(255,255,255,.2);line-height:1.6;font-weight:300}
+.login-hint strong{color:rgba(20,184,166,.6);font-weight:500}
+
+/* back link */
+.back-link{display:flex;align-items:center;justify-content:center;gap:.45rem;margin-top:1.5rem;font-size:.78rem;color:rgba(255,255,255,.28);transition:color .25s;cursor:pointer}
+.back-link:hover{color:var(--teal-l)}
+.back-link svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2}
+
+/* dots animation on loading */
+@keyframes dotPulse{0%,80%,100%{transform:scale(0);opacity:0}40%{transform:scale(1);opacity:1}}
+.loading-dots{display:none;align-items:center;gap:4px}
+.loading-dots span{width:6px;height:6px;border-radius:50%;background:#fff;animation:dotPulse 1.2s infinite ease-in-out}
+.loading-dots span:nth-child(2){animation-delay:.15s}
+.loading-dots span:nth-child(3){animation-delay:.3s}
+.login-btn.loading .btn-text{display:none}
+.login-btn.loading .loading-dots{display:flex}
+
+/* footer */
+.login-foot{position:absolute;bottom:1.5rem;left:0;right:0;text-align:center;font-size:.7rem;color:rgba(255,255,255,.14);letter-spacing:.04em}
+</style>
+</head>
+<body>
+<div class="bg-mesh"></div>
+<div class="bg-glow"></div>
+<div class="bg-glow2"></div>
+
+<div class="card">
+  <div class="logo">
+    <div class="logo-gem">M</div>
+    <div class="logo-text">
+      <span class="logo-name">Mantelet Consultants</span>
+      <span class="logo-sub">Admin Portal</span>
+    </div>
+  </div>
+
+  <h1 class="login-title" id="loginGreeting">Welcome Back</h1>
+  <p class="login-sub">Sign in to manage your website content, projects, and settings.</p>
+
+  <div class="error-msg" id="errMsg">
+    Incorrect username or password. Please try again.
+  </div>
+
+  <form id="loginForm" novalidate onsubmit="handleLogin(event)">
+    <div class="fg">
+      <label class="fl" for="username">Username</label>
+      <input type="text" class="fi" id="username" placeholder="admin" autocomplete="username" required>
+    </div>
+    <div class="fg">
+      <label class="fl" for="password">Password</label>
+      <div class="fi-pw-wrap">
+        <input type="password" class="fi" id="password" placeholder="••••••••" autocomplete="current-password" required>
+        <button type="button" class="pw-toggle" onclick="togglePw()" aria-label="Toggle password visibility" id="pwToggle">
+          <svg id="eyeIcon" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
+      </div>
+    </div>
+    <button class="login-btn" type="submit" id="loginBtn">
+      <span class="btn-text">Sign In <svg viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg></span>
+      <div class="loading-dots"><span></span><span></span><span></span></div>
+    </button>
+  </form>
+
+  <div class="login-hint">
+    <p>Default credentials: <strong>mantelet</strong> / <strong>mantelet123</strong><br>Change these in the Site Settings after first login.</p>
+  </div>
+
+  <div class="back-link" onclick="window.location.href='index.html'">
+    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    Back to Public Website
+  </div>
+</div>
+
+<p class="login-foot">&copy; 2026 Mantelet Consultants &nbsp;·&nbsp; Admin Portal v2.0</p>
+
+<script>
+  // Check if already logged in
+  if (sessionStorage.getItem('mc_admin_auth') === 'true') {
+    window.location.href = 'admin-portal.html';
+  }
+
+  // Default credentials (in production, replace with server-side auth)
+  const CREDS = { username: 'mantelet', password: 'mantelet123' };
+
+  // Load admin profile for greeting
+  function loadAdminProfile() {
+    try {
+      const profile = JSON.parse(localStorage.getItem('mantelet_admin_profile'));
+      if (profile && profile.name) {
+        const greeting = document.getElementById('loginGreeting');
+        if (greeting) {
+          greeting.textContent = `Welcome Back, ${profile.name}`;
+        }
+      }
+    } catch (e) {
+      // Use default greeting if profile not found
+    }
+  }
+
+  // Load profile on page load
+  loadAdminProfile();
+
+  function handleLogin(e) {
+    e.preventDefault();
+    const user = document.getElementById('username').value.trim();
+    const pass = document.getElementById('password').value;
+    const btn = document.getElementById('loginBtn');
+    const err = document.getElementById('errMsg');
+
+    err.classList.remove('show');
+    btn.classList.add('loading');
+
+    setTimeout(() => {
+      if (user === CREDS.username && pass === CREDS.password) {
+        sessionStorage.setItem('mc_admin_auth', 'true');
+        sessionStorage.setItem('mc_admin_user', user);
+        window.location.href = 'admin-portal.html';
+      } else {
+        btn.classList.remove('loading');
+        err.classList.add('show');
+        document.getElementById('password').value = '';
+        document.getElementById('password').focus();
+        document.getElementById('password').style.borderColor = 'rgba(220,38,38,.5)';
+        setTimeout(() => {
+          document.getElementById('password').style.borderColor = '';
+        }, 2000);
+      }
+    }, 900);
+  }
+
+  function togglePw() {
+    const inp = document.getElementById('password');
+    const icon = document.getElementById('eyeIcon');
+    const isHidden = inp.type === 'password';
+    inp.type = isHidden ? 'text' : 'password';
+    icon.innerHTML = isHidden
+      ? '<path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>'
+      : '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+  }
+
+  // Enter key on username moves to password
+  document.getElementById('username').addEventListener('keydown', e => {
+    if (e.key === 'Enter') { e.preventDefault(); document.getElementById('password').focus(); }
+  });
+</script>
+</body>
+</html>

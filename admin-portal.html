@@ -1,0 +1,2203 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mantelet Admin Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════
+   ADMIN PORTAL — MANTELET CONSULTANTS
+   Cyan/Teal & White Design Language
+══════════════════════════════════════════ */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{font-size:16px;height:100%}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--text-h);height:100%;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{text-decoration:none;color:inherit}
+button,input,select,textarea{font-family:inherit}
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-track{background:#e0f5f3}
+::-webkit-scrollbar-thumb{background:#2ab8a8;border-radius:2px}
+
+/* ── TOKENS ── */
+:root{
+  --teal:       #14b8a6;
+  --teal-d:     #0d9488;
+  --teal-dd:    #0f766e;
+  --teal-l:     #5eead4;
+  --teal-ll:    #ccfbf1;
+  --teal-pale:  #f0fdf9;
+  --cyan:       #06b6d4;
+  --cyan-d:     #0891b2;
+  --white:      #ffffff;
+  --bg:         #f0faf9;
+  --bg2:        #e6f7f5;
+  --sidebar-bg: #0c2321;
+  --sidebar-w:  260px;
+  --text-h:     #0f2a28;
+  --text-b:     #1a4040;
+  --text-m:     #4a7a76;
+  --text-s:     #7ab3ae;
+  --border:     rgba(20,184,166,0.15);
+  --border-m:   rgba(20,184,166,0.3);
+  --shadow-sm:  0 1px 4px rgba(14,116,107,0.08);
+  --shadow-md:  0 4px 20px rgba(14,116,107,0.12);
+  --shadow-lg:  0 12px 48px rgba(14,116,107,0.16);
+  --radius:     6px;
+  --ease:       cubic-bezier(.4,0,.2,1);
+  --t:          0.25s;
+}
+
+[data-theme="dark"]{
+  --bg:         #0c2321;
+  --bg2:        #0f2a28;
+  --text-h:     #f0fdfa;
+  --text-b:     #ccfbf1;
+  --text-m:     #99f6e4;
+  --text-s:     #5eead4;
+  --border:     rgba(94,234,212,0.15);
+  --border-m:   rgba(94,234,212,0.3);
+  --shadow-sm: 0 1px 4px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 20px rgba(0,0,0,0.4);
+  --shadow-lg: 0 12px 48px rgba(0,0,0,0.5);
+  --white:      #0c2321;
+}
+
+/* ── LAYOUT ── */
+.app{display:flex;min-height:100vh}
+
+/* ══ SIDEBAR ══ */
+.sidebar{
+  width:var(--sidebar-w);flex-shrink:0;
+  background:var(--sidebar-bg);
+  display:flex;flex-direction:column;
+  position:fixed;top:0;left:0;bottom:0;z-index:200;
+  transition:transform var(--t) var(--ease);
+}
+.sidebar-head{
+  padding:1.6rem 1.5rem 1.4rem;
+  border-bottom:1px solid rgba(255,255,255,0.06);
+}
+.sidebar-logo{display:flex;align-items:center;gap:.65rem;margin-bottom:.35rem}
+.sidebar-gem{
+  width:34px;height:34px;background:var(--teal);flex-shrink:0;
+  clip-path:polygon(50% 0%,93% 25%,93% 75%,50% 100%,7% 75%,7% 25%);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:#0c2321;
+}
+.sidebar-logo-text{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700;color:var(--text-h);letter-spacing:.01em}
+.sidebar-sub{font-size:.65rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.28);margin-left:1px}
+.theme-toggle{
+  background:none;border:none;cursor:pointer;padding:.4rem;border-radius:6px;
+  color:rgba(255,255,255,.5);transition:all var(--t);margin-right:auto;
+}
+.theme-toggle:hover{color:var(--teal);background:rgba(255,255,255,.05)}
+.theme-toggle svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2}
+
+.sidebar-nav{flex:1;overflow-y:auto;padding:1rem 0}
+.sidebar-section-label{
+  font-size:.6rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+  color:rgba(255,255,255,.2);padding:.75rem 1.5rem .4rem;display:block;
+}
+.nav-item{
+  display:flex;align-items:center;gap:.75rem;
+  padding:.7rem 1.5rem;cursor:pointer;
+  font-size:.875rem;font-weight:400;
+  color:rgba(255,255,255,.5);
+  transition:all var(--t) var(--ease);
+  border-left:2px solid transparent;
+  position:relative;
+}
+.nav-item svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.6;flex-shrink:0}
+.nav-item:hover{color:rgba(255,255,255,.85);background:rgba(255,255,255,.04)}
+.nav-item.active{
+  color:var(--teal-l);background:rgba(20,184,166,.08);
+  border-left-color:var(--teal);font-weight:500;
+}
+.nav-item .badge{
+  margin-left:auto;background:var(--teal);color:#0c2321;
+  font-size:.6rem;font-weight:700;padding:1px 6px;border-radius:10px;
+}
+
+.sidebar-foot{
+  padding:1.25rem 1.5rem;border-top:1px solid rgba(255,255,255,.06);
+}
+.sidebar-user{display:flex;align-items:center;gap:.75rem}
+.sidebar-avatar{
+  width:34px;height:34px;border-radius:50%;
+  background:linear-gradient(135deg,var(--teal-d),var(--cyan-d));
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Syne',sans-serif;font-size:.85rem;font-weight:700;color:#fff;flex-shrink:0;
+}
+.sidebar-user-name{font-size:.85rem;font-weight:500;color:rgba(255,255,255,.75);display:block}
+.sidebar-user-role{font-size:.7rem;color:rgba(255,255,255,.3);display:block}
+.sidebar-logout{
+  margin-left:auto;width:28px;height:28px;border:1px solid rgba(255,255,255,.1);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all var(--t);
+}
+.sidebar-logout svg{width:14px;height:14px;stroke:rgba(255,255,255,.3);fill:none;stroke-width:2}
+.sidebar-logout:hover{border-color:rgba(255,100,100,.5);background:rgba(255,100,100,.06)}
+.sidebar-logout:hover svg{stroke:rgba(255,100,100,.7)}
+
+/* ══ MAIN ══ */
+.main{
+  margin-left:var(--sidebar-w);flex:1;
+  display:flex;flex-direction:column;min-height:100vh;
+  background:var(--bg);
+}
+
+/* ── TOP BAR ── */
+.topbar{
+  background:var(--bg);
+  border-bottom:1px solid var(--border);
+  padding:0 2rem;height:62px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:100;
+  box-shadow:var(--shadow-sm);
+}
+.topbar-left{display:flex;align-items:center;gap:1rem}
+.topbar-title{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:600;color:var(--text-h)}
+.topbar-breadcrumb{font-size:.8rem;color:var(--text-m)}
+.topbar-breadcrumb span{color:var(--teal)}
+.topbar-right{display:flex;align-items:center;gap:.85rem}
+.topbar-preview-btn{
+  display:inline-flex;align-items:center;gap:.5rem;
+  background:var(--teal);color:#fff;
+  font-size:.77rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;
+  padding:.5rem 1.2rem;border:none;cursor:pointer;
+  transition:background var(--t);border-radius:var(--radius);
+}
+.topbar-preview-btn:hover{background:var(--teal-d)}
+.topbar-preview-btn svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2}
+.save-status{
+  font-size:.75rem;font-weight:500;color:var(--text-s);
+  display:flex;align-items:center;gap:.4rem;
+}
+.save-status-dot{width:7px;height:7px;border-radius:50%;background:var(--teal);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hbg-mob{display:none;background:none;border:none;cursor:pointer;padding:4px}
+.hbg-mob svg{width:22px;height:22px;stroke:var(--text-h);fill:none;stroke-width:2}
+
+/* ── PAGE CONTENT ── */
+.page{flex:1;padding:2rem;display:none}
+.page.active{display:block}
+
+/* ── SECTION HEADER ── */
+.sec-head{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  margin-bottom:1.75rem;flex-wrap:wrap;gap:1rem;
+}
+.sec-tag{
+  font-size:.65rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--teal);display:flex;align-items:center;gap:.5rem;margin-bottom:.3rem;
+}
+.sec-tag::before{content:'';width:18px;height:1px;background:var(--teal)}
+.sec-title{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:700;color:var(--text-h)}
+.sec-sub{font-size:.85rem;color:var(--text-m);margin-top:.25rem}
+
+/* ── BUTTONS ── */
+.btn{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-size:.8rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  padding:.6rem 1.3rem;border:1px solid transparent;cursor:pointer;
+  transition:all var(--t) var(--ease);border-radius:var(--radius);
+}
+.btn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;flex-shrink:0}
+.btn-primary{background:var(--teal);color:#fff;border-color:var(--teal)}
+.btn-primary:hover{background:var(--teal-d);border-color:var(--teal-d)}
+.btn-secondary{background:var(--bg);color:var(--text-h);border-color:var(--border-m)}
+.btn-secondary:hover{border-color:var(--teal);color:var(--teal)}
+.btn-danger{background:transparent;color:#dc2626;border-color:rgba(220,38,38,.25)}
+.btn-danger:hover{background:rgba(220,38,38,.06);border-color:#dc2626}
+.btn-sm{padding:.4rem .9rem;font-size:.72rem}
+.btn-icon{padding:.5rem;border-radius:var(--radius)}
+
+/* ── CARDS ── */
+.card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm)}
+.card-head{padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.card-title{font-family:'Syne',sans-serif;font-size:.95rem;font-weight:600;color:var(--text-h)}
+.card-body{padding:1.5rem}
+
+/* ── FORM ELEMENTS ── */
+.fg{margin-bottom:1.2rem}
+.fl{display:block;font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-m);margin-bottom:.4rem}
+.fi,.ft,.fs{
+  width:100%;background:var(--bg);border:1.5px solid var(--border);
+  padding:.72rem 1rem;font-family:'DM Sans',sans-serif;font-size:.9375rem;
+  color:var(--text-h);outline:none;border-radius:var(--radius);
+  transition:border-color var(--t),box-shadow var(--t);font-weight:300;
+}
+.fi:focus,.ft:focus,.fs:focus{
+  border-color:var(--teal);
+  box-shadow:0 0 0 3px rgba(20,184,166,0.12);
+  background:var(--bg);
+}
+.fi::placeholder,.ft::placeholder{color:var(--text-s)}
+.ft{resize:vertical;min-height:100px;line-height:1.65}
+.fs option{background:var(--bg);color:var(--text-h)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.form-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem}
+.fi-range{width:100%;accent-color:var(--teal);margin-top:.35rem}
+.range-val{font-size:.9rem;font-weight:600;color:var(--teal);margin-left:.75rem}
+
+/* ── TOAST ── */
+.toast-container{position:fixed;top:1.25rem;right:1.25rem;z-index:9999;display:flex;flex-direction:column;gap:.6rem}
+.toast{
+  display:flex;align-items:center;gap:.75rem;
+  background:var(--sidebar-bg);color:#fff;
+  padding:.9rem 1.25rem;border-radius:var(--radius);
+  box-shadow:var(--shadow-lg);font-size:.875rem;font-weight:400;
+  animation:toastIn .35s var(--ease) forwards;
+  max-width:340px;border-left:3px solid var(--teal);
+}
+.toast.error{border-left-color:#dc2626}
+.toast.warn{border-left-color:#f59e0b}
+.toast svg{width:17px;height:17px;stroke:var(--teal);fill:none;stroke-width:2;flex-shrink:0}
+.toast.error svg{stroke:#dc2626}
+@keyframes toastIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:none}}
+
+/* ── DASHBOARD STATS ── */
+.dash-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem;margin-bottom:2rem}
+.dash-card{
+  background:var(--bg);border:1px solid var(--border);
+  border-radius:var(--radius);padding:1.4rem 1.5rem;
+  position:relative;overflow:hidden;
+  box-shadow:var(--shadow-sm);transition:transform var(--t),box-shadow var(--t);
+}
+.dash-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.dash-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--teal-d),var(--teal),var(--teal-l));
+}
+.dash-card-icon{
+  width:40px;height:40px;background:var(--teal-ll);border-radius:var(--radius);
+  display:flex;align-items:center;justify-content:center;margin-bottom:1rem;
+}
+.dash-card-icon svg{width:20px;height:20px;stroke:var(--teal-d);fill:none;stroke-width:1.8}
+.dash-card-num{font-family:'Syne',sans-serif;font-size:2rem;font-weight:700;color:var(--text-h);display:block;line-height:1;margin-bottom:.3rem}
+.dash-card-label{font-size:.8rem;color:var(--text-m);font-weight:400}
+.dash-card-change{
+  position:absolute;top:1.4rem;right:1.5rem;
+  font-size:.72rem;font-weight:600;color:var(--teal-d);
+  background:var(--teal-ll);padding:.2rem .6rem;border-radius:10px;
+}
+
+/* ── ACTIVITY FEED ── */
+.activity-list{display:flex;flex-direction:column;gap:0}
+.activity-item{
+  display:flex;align-items:center;gap:1rem;
+  padding:.9rem 1.5rem;border-bottom:1px solid var(--border);
+  transition:background var(--t);
+}
+.activity-item:last-child{border-bottom:none}
+.activity-item:hover{background:var(--teal-pale)}
+.activity-dot{width:8px;height:8px;border-radius:50%;background:var(--teal);flex-shrink:0}
+.activity-text{font-size:.875rem;color:var(--text-b);flex:1}
+.activity-text strong{color:var(--teal-d);font-weight:600}
+.activity-time{font-size:.75rem;color:var(--text-s)}
+
+/* ── QUICK LINKS ── */
+.quick-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.quick-link{
+  background:var(--bg);border:1px solid var(--border);
+  border-radius:var(--radius);padding:1.25rem;
+  display:flex;flex-direction:column;align-items:flex-start;gap:.5rem;
+  cursor:pointer;transition:all var(--t) var(--ease);
+}
+.quick-link:hover{border-color:var(--teal);background:var(--teal-pale);transform:translateY(-2px)}
+.quick-link-icon{width:36px;height:36px;background:var(--teal-ll);border-radius:var(--radius);display:flex;align-items:center;justify-content:center}
+.quick-link-icon svg{width:18px;height:18px;stroke:var(--teal-d);fill:none;stroke-width:1.8}
+.quick-link-name{font-size:.85rem;font-weight:600;color:var(--text-h)}
+.quick-link-desc{font-size:.76rem;color:var(--text-m)}
+
+/* ── TABLE ── */
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+thead tr{background:var(--bg);border-bottom:2px solid var(--border-m)}
+th{padding:.85rem 1rem;text-align:left;font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-m);white-space:nowrap}
+td{padding:.85rem 1rem;font-size:.875rem;color:var(--text-b);border-bottom:1px solid var(--border);vertical-align:middle}
+tr:hover td{background:var(--teal-pale)}
+tr:last-child td{border-bottom:none}
+.badge-cat{
+  display:inline-block;font-size:.68rem;font-weight:600;
+  padding:.22rem .65rem;border-radius:10px;
+  background:var(--teal-ll);color:var(--teal-dd);
+}
+.badge-featured{background:rgba(245,158,11,.12);color:#b45309}
+.td-img{width:52px;height:42px;object-fit:cover;border-radius:4px}
+.td-actions{display:flex;gap:.4rem;flex-shrink:0}
+
+/* ── MODAL ── */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(12,35,33,.55);z-index:500;
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity var(--t);
+  padding:1.5rem;backdrop-filter:blur(4px);
+}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal{
+  background:var(--bg);border-radius:var(--radius);
+  width:100%;max-width:640px;max-height:90vh;overflow-y:auto;
+  box-shadow:var(--shadow-lg);
+  transform:scale(.96) translateY(10px);transition:transform var(--t) var(--ease);
+}
+.modal-overlay.open .modal{transform:none}
+.modal-header{
+  padding:1.5rem 1.75rem;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;background:var(--white);z-index:1;
+}
+.modal-title{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;color:var(--text-h)}
+.modal-close{
+  width:32px;height:32px;border:1px solid var(--border-m);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  font-size:.9rem;color:var(--text-m);transition:all var(--t);background:none;
+}
+.modal-close:hover{border-color:var(--teal);color:var(--teal)}
+.modal-body{padding:1.75rem}
+.modal-footer{
+  padding:1.25rem 1.75rem;border-top:1px solid var(--border);
+  display:flex;justify-content:flex-end;gap:.75rem;
+  position:sticky;bottom:0;background:var(--white);
+}
+
+/* ── IMAGE PREVIEW ── */
+.img-preview{
+  width:100%;height:150px;object-fit:cover;border-radius:var(--radius);
+  border:1px solid var(--border);margin-top:.5rem;display:none;
+  background:var(--bg);
+}
+.img-preview.show{display:block}
+.img-url-hint{font-size:.72rem;color:var(--text-s);margin-top:.35rem}
+
+/* ── STAR RATING ── */
+.star-rating{display:flex;gap:.25rem;margin-top:.35rem}
+.star-btn{background:none;border:none;cursor:pointer;font-size:1.3rem;color:#d1d5db;transition:color .15s}
+.star-btn.on{color:#f59e0b}
+
+/* ── TOGGLE ── */
+.toggle-wrap{display:flex;align-items:center;gap:.75rem}
+.toggle{
+  width:44px;height:24px;border-radius:12px;background:var(--bg2);border:1.5px solid var(--border-m);
+  position:relative;cursor:pointer;transition:background var(--t);flex-shrink:0;
+}
+.toggle.on{background:var(--teal);border-color:var(--teal)}
+.toggle-thumb{
+  position:absolute;top:2px;left:2px;width:18px;height:18px;
+  border-radius:50%;background:var(--bg);box-shadow:0 1px 3px rgba(0,0,0,.2);
+  transition:transform var(--t) var(--ease);
+}
+.toggle.on .toggle-thumb{transform:translateX(20px)}
+.toggle-label{font-size:.875rem;color:var(--text-b)}
+
+/* ── SECTION PREVIEW STRIP ── */
+.preview-strip{
+  background:linear-gradient(135deg,var(--teal-dd),var(--teal));
+  border-radius:var(--radius);padding:1.5rem;
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:1.75rem;flex-wrap:wrap;gap:1rem;
+}
+.preview-strip-text{color:#fff}
+.preview-strip-title{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:.2rem}
+.preview-strip-sub{font-size:.82rem;opacity:.75}
+.preview-strip-btn{
+  background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.3);
+  padding:.55rem 1.2rem;font-size:.78rem;font-weight:600;letter-spacing:.07em;
+  text-transform:uppercase;cursor:pointer;border-radius:var(--radius);
+  transition:background var(--t);display:flex;align-items:center;gap:.5rem;
+}
+.preview-strip-btn:hover{background:rgba(255,255,255,.25)}
+.preview-strip-btn svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2}
+
+/* ── COLOR SWATCH ── */
+.swatch-grid{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.5rem}
+.swatch{
+  width:32px;height:32px;border-radius:50%;cursor:pointer;
+  border:2px solid transparent;transition:all var(--t);
+}
+.swatch.active,.swatch:hover{border-color:var(--text-h);transform:scale(1.1)}
+
+/* ── SECTION CARDS FOR SETTINGS ── */
+.setting-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1rem 0;border-bottom:1px solid var(--border);
+  gap:1rem;
+}
+.setting-row:last-child{border-bottom:none}
+.setting-label{font-size:.9rem;font-weight:500;color:var(--text-h)}
+.setting-desc{font-size:.8rem;color:var(--text-m);margin-top:.15rem}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1100px){
+  .dash-grid{grid-template-columns:repeat(2,1fr)}
+  .quick-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:900px){
+  .form-row{grid-template-columns:1fr}
+  .form-row-3{grid-template-columns:1fr 1fr}
+}
+@media(max-width:768px){
+  .sidebar{transform:translateX(calc(-1*var(--sidebar-w)))}
+  .sidebar.open{transform:none}
+  .main{margin-left:0}
+  .hbg-mob{display:flex}
+  .dash-grid{grid-template-columns:1fr 1fr}
+  .quick-grid{grid-template-columns:1fr}
+  .topbar{padding:0 1.25rem}
+  .page{padding:1.25rem}
+  .sec-head{flex-direction:column;align-items:flex-start}
+}
+@media(max-width:480px){
+  .dash-grid{grid-template-columns:1fr}
+  .form-row-3{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <h3 class="modal-title" id="modalTitle">Edit Item</h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" id="modalSave" onclick="saveModal()">
+        <svg viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        Save Changes
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- SIDEBAR OVERLAY (mobile) -->
+<div id="sidebarOv" style="position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:199;display:none" onclick="closeSidebar()"></div>
+
+<!-- APP -->
+<div class="app">
+
+  <!-- ══ SIDEBAR ══ -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-head">
+      <div class="sidebar-logo">
+        <div class="sidebar-gem">M</div>
+        <span class="sidebar-logo-text">Mantelet</span>
+      </div>
+      <button class="theme-toggle" onclick="toggleAdminTheme()" title="Toggle theme">
+        <svg id="themeIcon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      </button>
+      <span class="sidebar-sub">Admin Portal</span>
+    </div>
+
+    <nav class="sidebar-nav">
+      <span class="sidebar-section-label">Overview</span>
+      <div class="nav-item active" data-page="dashboard" onclick="navigate('dashboard',this)">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        Dashboard
+      </div>
+
+      <span class="sidebar-section-label">Content</span>
+      <div class="nav-item" data-page="hero" onclick="navigate('hero',this)">
+        <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        Hero Section
+      </div>
+      <div class="nav-item" data-page="about" onclick="navigate('about',this)">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        About
+      </div>
+      <div class="nav-item" data-page="services" onclick="navigate('services',this)">
+        <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+        Services
+      </div>
+      <div class="nav-item" data-page="projects" onclick="navigate('projects',this)">
+        <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
+        Projects
+        <span class="badge" id="projBadge">6</span>
+      </div>
+      <div class="nav-item" data-page="testimonials" onclick="navigate('testimonials',this)">
+        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        Testimonials
+        <span class="badge" id="testiBadge">3</span>
+      </div>
+      <div class="nav-item" data-page="stats" onclick="navigate('stats',this)">
+        <svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+        Statistics
+      </div>
+
+      <span class="sidebar-section-label">Site</span>
+      <div class="nav-item" data-page="contact" onclick="navigate('contact',this)">
+        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.63A2 2 0 012.18 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.15a16 16 0 006.94 6.94l1.41-1.41a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        Contact Info
+      </div>
+      <div class="nav-item" data-page="meta" onclick="navigate('meta',this)">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M12 2v2M12 20v2M4.93 19.07l1.41-1.41M19.07 19.07l-1.41-1.41M2 12h2M20 12h2"/></svg>
+        Site Settings
+      </div>
+      <div class="nav-item" data-page="profile" onclick="navigate('profile',this)">
+        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        My Profile
+      </div>
+    </nav>
+
+    <div class="sidebar-foot">
+      <div class="sidebar-user">
+        <div class="sidebar-avatar">AD</div>
+        <div>
+          <span class="sidebar-user-name">Admin User</span>
+          <span class="sidebar-user-role">Site Manager</span>
+        </div>
+        <button class="sidebar-logout" title="Logout" onclick="handleLogout()">
+          <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ══ MAIN CONTENT ══ -->
+  <div class="main">
+    <!-- TOP BAR -->
+    <div class="topbar">
+      <div class="topbar-left">
+        <button class="hbg-mob" onclick="openSidebar()">
+          <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <div>
+          <div class="topbar-title" id="topbarTitle">Dashboard</div>
+          <div class="topbar-breadcrumb">Admin / <span id="topbarCrumb">Overview</span></div>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <div class="save-status" id="saveStatus">
+          <div class="save-status-dot"></div>
+          All changes saved
+        </div>
+        <span style="font-size:.7rem;color:var(--text-s);background:var(--bg);border:1px solid var(--border);padding:.25rem .55rem;border-radius:4px;cursor:pointer" onclick="showQuickNav()" title="Quick navigate">⌘K</span>
+        <button class="topbar-preview-btn" onclick="openPublicSite()">
+          <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+          View Live Site
+        </button>
+      </div>
+    </div>
+
+    <!-- ══ PAGE: DASHBOARD ══ -->
+    <div class="page active" id="page-dashboard">
+      <div class="sec-head">
+        <div class="sec-head-left">
+          <div class="sec-tag">Overview</div>
+          <h1 class="sec-title">Welcome back, Admin</h1>
+          <p class="sec-sub">Manage your Mantelet Consultants website content from here.</p>
+        </div>
+      </div>
+
+      <div class="dash-grid">
+        <div class="dash-card">
+          <div class="dash-card-icon"><svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg></div>
+          <span class="dash-card-num" id="dc-projects">6</span>
+          <span class="dash-card-label">Active Projects</span>
+          <span class="dash-card-change">All published</span>
+        </div>
+        <div class="dash-card">
+          <div class="dash-card-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+          <span class="dash-card-num" id="dc-testimonials">3</span>
+          <span class="dash-card-label">Testimonials</span>
+          <span class="dash-card-change">Published</span>
+        </div>
+        <div class="dash-card">
+          <div class="dash-card-icon"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg></div>
+          <span class="dash-card-num" id="dc-services">6</span>
+          <span class="dash-card-label">Services Listed</span>
+          <span class="dash-card-change">All active</span>
+        </div>
+        <div class="dash-card">
+          <div class="dash-card-icon"><svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></div>
+          <span class="dash-card-num" id="dc-stats">4</span>
+          <span class="dash-card-label">Statistics</span>
+          <span class="dash-card-change">Hero counters</span>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.5rem">
+        <div class="card">
+          <div class="card-head">
+            <span class="card-title">Quick Actions</span>
+          </div>
+          <div class="card-body" style="padding:1rem">
+            <div class="quick-grid">
+              <div class="quick-link" onclick="navigate('projects',document.querySelector('[data-page=projects]'))">
+                <div class="quick-link-icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></div>
+                <span class="quick-link-name">Add Project</span>
+                <span class="quick-link-desc">Upload new portfolio item</span>
+              </div>
+              <div class="quick-link" onclick="navigate('testimonials',document.querySelector('[data-page=testimonials]'))">
+                <div class="quick-link-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+                <span class="quick-link-name">Add Testimonial</span>
+                <span class="quick-link-desc">Add client review</span>
+              </div>
+              <div class="quick-link" onclick="navigate('stats',document.querySelector('[data-page=stats]'))">
+                <div class="quick-link-icon"><svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></div>
+                <span class="quick-link-name">Edit Stats</span>
+                <span class="quick-link-desc">Update counters</span>
+              </div>
+              <div class="quick-link" onclick="navigate('hero',document.querySelector('[data-page=hero]'))">
+                <div class="quick-link-icon"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div>
+                <span class="quick-link-name">Edit Hero</span>
+                <span class="quick-link-desc">Update homepage banner</span>
+              </div>
+              <div class="quick-link" onclick="navigate('contact',document.querySelector('[data-page=contact]'))">
+                <div class="quick-link-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.63A2 2 0 012.18 1h3a2 2 0 012 1.72"/></svg></div>
+                <span class="quick-link-name">Update Contact</span>
+                <span class="quick-link-desc">Edit phone, email, address</span>
+              </div>
+              <div class="quick-link" onclick="exportData()">
+                <div class="quick-link-icon"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg></div>
+                <span class="quick-link-name">Export Data</span>
+                <span class="quick-link-desc">Download site data JSON</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <span class="card-title">Recent Activity</span>
+          </div>
+          <div class="activity-list" id="activityList">
+            <div class="activity-item"><div class="activity-dot"></div><span class="activity-text">Site data <strong>loaded</strong> from storage</span><span class="activity-time">Just now</span></div>
+            <div class="activity-item"><div class="activity-dot"></div><span class="activity-text">Admin portal <strong>initialized</strong></span><span class="activity-time">Just now</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <span class="card-title">Site Content Summary</span>
+          <button class="btn btn-secondary btn-sm" onclick="openPublicSite()">View Live Site</button>
+        </div>
+        <div class="card-body">
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem" id="summaryGrid"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ PAGE: HERO ══ -->
+    <div class="page" id="page-hero">
+      <div class="preview-strip">
+        <div class="preview-strip-text">
+          <div class="preview-strip-title">Hero Section</div>
+          <div class="preview-strip-sub">Changes update the homepage banner headline, subtext, and background image</div>
+        </div>
+        <button class="preview-strip-btn" onclick="openPublicSite()">
+          <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+          Preview
+        </button>
+      </div>
+      <div class="card" id="heroForm"></div>
+    </div>
+
+    <!-- ══ PAGE: ABOUT ══ -->
+    <div class="page" id="page-about">
+      <div class="preview-strip">
+        <div class="preview-strip-text">
+          <div class="preview-strip-title">About Section</div>
+          <div class="preview-strip-sub">Edit company introduction, values, and key messages</div>
+        </div>
+        <button class="preview-strip-btn" onclick="openPublicSite()"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>Preview</button>
+      </div>
+      <div class="card" id="aboutForm"></div>
+    </div>
+
+    <!-- ══ PAGE: SERVICES ══ -->
+    <div class="page" id="page-services">
+      <div class="sec-head">
+        <div class="sec-head-left">
+          <div class="sec-tag">Content Management</div>
+          <h1 class="sec-title">Services</h1>
+          <p class="sec-sub">Edit service names, descriptions and icons shown on the public website.</p>
+        </div>
+        <button class="btn btn-primary" onclick="addService()">
+          <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+          Add Service
+        </button>
+      </div>
+      <div class="card"><div class="table-wrap"><table><thead><tr><th>#</th><th>Service Name</th><th>Description Preview</th><th style="text-align:right">Actions</th></tr></thead><tbody id="servicesTable"></tbody></table></div></div>
+    </div>
+
+    <!-- ══ PAGE: PROJECTS ══ -->
+    <div class="page" id="page-projects">
+      <div class="sec-head">
+        <div class="sec-head-left">
+          <div class="sec-tag">Portfolio Management</div>
+          <h1 class="sec-title">Projects</h1>
+          <p class="sec-sub">Add, edit, or remove portfolio projects shown on the public website.</p>
+        </div>
+        <button class="btn btn-primary" onclick="addProject()">
+          <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+          Add Project
+        </button>
+      </div>
+      <div class="card">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Image</th><th>Project Name</th><th>Category</th><th>Location</th><th>Featured</th><th style="text-align:right">Actions</th></tr></thead>
+            <tbody id="projectsTable"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ PAGE: TESTIMONIALS ══ -->
+    <div class="page" id="page-testimonials">
+      <div class="sec-head">
+        <div class="sec-head-left">
+          <div class="sec-tag">Social Proof</div>
+          <h1 class="sec-title">Testimonials</h1>
+          <p class="sec-sub">Manage client reviews and ratings displayed on the public website.</p>
+        </div>
+        <button class="btn btn-primary" onclick="addTestimonial()">
+          <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+          Add Testimonial
+        </button>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.25rem" id="testiCards"></div>
+    </div>
+
+    <!-- ══ PAGE: STATS ══ -->
+    <div class="page" id="page-stats">
+      <div class="sec-head">
+        <div class="sec-head-left">
+          <div class="sec-tag">Key Numbers</div>
+          <h1 class="sec-title">Statistics</h1>
+          <p class="sec-sub">Update the hero section counter numbers and labels.</p>
+        </div>
+        <button class="btn btn-primary" onclick="addStat()">
+          <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+          Add Stat
+        </button>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem" id="statsCards"></div>
+    </div>
+
+    <!-- ══ PAGE: CONTACT ══ -->
+    <div class="page" id="page-contact">
+      <div class="preview-strip">
+        <div class="preview-strip-text">
+          <div class="preview-strip-title">Contact Information</div>
+          <div class="preview-strip-sub">Update office address, phone numbers, email addresses and location</div>
+        </div>
+        <button class="preview-strip-btn" onclick="openPublicSite()"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>Preview</button>
+      </div>
+      <div class="card" id="contactForm"></div>
+    </div>
+
+    <!-- ══ PAGE: META / SETTINGS ══ -->
+    <div class="page" id="page-meta">
+      <div class="sec-head">
+        <div class="sec-head-left">
+          <div class="sec-tag">Configuration</div>
+          <h1 class="sec-title">Site Settings</h1>
+          <p class="sec-sub">Manage global site details, footer content, and client logos.</p>
+        </div>
+      </div>
+      <div class="card" id="metaForm"></div>
+      <div class="card" style="margin-top:1.5rem">
+        <div class="card-head"><span class="card-title">Danger Zone</span></div>
+        <div class="card-body">
+          <div class="setting-row">
+            <div>
+              <div class="setting-label">Reset All Content to Defaults</div>
+              <div class="setting-desc">This will erase all your edits and restore the original placeholder content. This cannot be undone.</div>
+            </div>
+            <button class="btn btn-danger" onclick="confirmReset()">Reset to Defaults</button>
+          </div>
+          <div class="setting-row">
+            <div>
+              <div class="setting-label">Export Site Data</div>
+              <div class="setting-desc">Download a JSON backup of all your site content for safekeeping or migration.</div>
+            </div>
+            <button class="btn btn-secondary" onclick="exportData()">Export JSON</button>
+          </div>
+          <div class="setting-row" style="border-bottom:none">
+            <div>
+              <div class="setting-label">Import Site Data</div>
+              <div class="setting-desc">Restore site content from a previously exported JSON file.</div>
+            </div>
+            <button class="btn btn-secondary" onclick="importData()">Import JSON</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ PAGE: PROFILE ══ -->
+    <div class="page" id="page-profile">
+      <div class="sec-head">
+        <div class="sec-head-left">
+          <div class="sec-tag">Account</div>
+          <h1 class="sec-title">My Profile</h1>
+          <p class="sec-sub">Manage your account settings and personal information</p>
+        </div>
+      </div>
+      
+      <div class="card">
+        <div class="card-body">
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem;">
+            <!-- Profile Image -->
+            <div style="text-align:center;padding:2rem;background:var(--bg);border-radius:var(--radius);border:1px solid var(--border);">
+              <div style="width:120px;height:120px;border-radius:50%;background:var(--teal);margin:0 auto 1rem;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:2.5rem;font-weight:700;color:#fff;overflow:hidden;">
+                <img id="profileImagePreview" src="" alt="Profile" style="width:100%;height:100%;object-fit:cover;display:none;">
+                <span id="profileInitials">AD</span>
+              </div>
+              <div class="fg">
+                <input type="file" id="profileImageFile" accept="image/*" onchange="handleProfileImageUpload()">
+                <p class="img-url-hint">Upload profile image (max 2MB)</p>
+              </div>
+              <input type="hidden" id="profileImageData">
+            </div>
+            
+            <!-- Profile Details -->
+            <div>
+              <div class="fg"><label class="fl">Display Name</label><input class="fi" id="profileName" placeholder="Your Name"></div>
+              <div class="fg"><label class="fl">Username</label><input class="fi" id="profileUsername" value="mantelet" disabled style="background:var(--bg);cursor:not-allowed;"></div>
+              
+              <div style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+                <h3 style="font-size:1rem;font-weight:600;margin-bottom:1rem;color:var(--text-h);">Change Password</h3>
+                <div class="fg"><label class="fl">Current Password</label><input type="password" class="fi" id="currentPassword"></div>
+                <div class="fg"><label class="fl">New Password</label><input type="password" class="fi" id="newPassword"></div>
+                <div class="fg"><label class="fl">Confirm New Password</label><input type="password" class="fi" id="confirmPassword"></div>
+                <button class="btn btn-primary" onclick="changePassword()" style="margin-top:1rem;">
+                  <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+                  Update Password
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <div style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+            <button class="btn btn-primary" onclick="saveProfile()">
+              <svg viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+              Save Profile
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /main -->
+</div><!-- /app -->
+
+<!-- Hidden file input for import -->
+<input type="file" id="importInput" accept=".json" style="display:none" onchange="handleImport(event)">
+
+<script>
+// ── INLINED DATA STORE ──
+// ═══════════════════════════════════════════════════════
+//  MANTELET CONSULTANTS — Shared Data Store
+//  All public site content lives here and is managed
+//  via the admin portal. Uses localStorage for persistence.
+// ═══════════════════════════════════════════════════════
+
+const MANTALET_DATA_KEY = 'mantelet_site_data';
+
+// Theme management
+const ADMIN_THEME_KEY = 'mantelet_admin_theme';
+
+function initAdminTheme() {
+  const savedTheme = localStorage.getItem(ADMIN_THEME_KEY) || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon(savedTheme);
+}
+
+function toggleAdminTheme() {
+  const current = document.documentElement.getAttribute('data-theme') || 'light';
+  const next = current === 'light' ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem(ADMIN_THEME_KEY, next);
+  updateThemeIcon(next);
+}
+
+function updateThemeIcon(theme) {
+  const icon = document.getElementById('themeIcon');
+  if (!icon) return;
+  if (theme === 'dark') {
+    icon.innerHTML = '<path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>';
+  } else {
+    icon.innerHTML = '<circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>';
+  }
+}
+
+// Initialize theme on load
+initAdminTheme();
+
+// Admin profile management
+const ADMIN_PROFILE_KEY = 'mantelet_admin_profile';
+
+function initAdminProfile() {
+  const profile = JSON.parse(localStorage.getItem(ADMIN_PROFILE_KEY) || '{"name":"Admin","username":"mantelet","image":""}');
+  
+  // Update UI with profile data
+  if (document.getElementById('profileName')) {
+    document.getElementById('profileName').value = profile.name || 'Admin';
+  }
+  
+  // Update sidebar user info
+  const userNameDisplay = document.querySelector('.sidebar-user-name');
+  if (userNameDisplay) {
+    userNameDisplay.textContent = profile.name ? profile.name.charAt(0).toUpperCase() + profile.name.slice(1) + ' User' : 'Admin User';
+  }
+  
+  // Update profile image if exists
+  if (profile.image) {
+    updateProfileImageDisplay(profile.image);
+  }
+}
+
+function updateProfileImageDisplay(imageData) {
+  const preview = document.getElementById('profileImagePreview');
+  const initials = document.getElementById('profileInitials');
+  const sidebarAvatar = document.querySelector('.sidebar-avatar');
+  
+  if (preview) {
+    preview.src = imageData;
+    preview.style.display = 'block';
+  }
+  if (initials) {
+    initials.style.display = 'none';
+  }
+  if (sidebarAvatar && imageData) {
+    sidebarAvatar.style.background = `url(${imageData}) center/cover`;
+    sidebarAvatar.textContent = '';
+  }
+}
+
+function handleProfileImageUpload() {
+  const file = document.getElementById('profileImageFile')?.files[0];
+  if (!file) return;
+  
+  // Check file size (2MB limit)
+  if (file.size > 2 * 1024 * 1024) {
+    showToast('File too large. Maximum size is 2MB.', 'error');
+    return;
+  }
+  
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    document.getElementById('profileImageData').value = e.target.result;
+    updateProfileImageDisplay(e.target.result);
+    showToast('Profile image uploaded successfully');
+  };
+  reader.readAsDataURL(file);
+}
+
+function saveProfile() {
+  const name = document.getElementById('profileName')?.value?.trim();
+  const imageData = document.getElementById('profileImageData')?.value;
+  
+  if (!name) {
+    showToast('Please enter your name', 'error');
+    return;
+  }
+  
+  const profile = {
+    name: name,
+    username: 'mantelet',
+    image: imageData || ''
+  };
+  
+  localStorage.setItem(ADMIN_PROFILE_KEY, JSON.stringify(profile));
+  
+  // Update UI
+  const userNameDisplay = document.querySelector('.sidebar-user-name');
+  if (userNameDisplay) {
+    userNameDisplay.textContent = name.charAt(0).toUpperCase() + name.slice(1) + ' User';
+  }
+  
+  // Update login page greeting
+  sessionStorage.setItem('mc_admin_user', name);
+  
+  showToast('Profile saved successfully');
+  logActivity('Profile <strong>updated</strong>');
+}
+
+function changePassword() {
+  const current = document.getElementById('currentPassword').value;
+  const newPass = document.getElementById('newPassword').value;
+  const confirm = document.getElementById('confirmPassword').value;
+  
+  // For now, we'll just use localStorage to store the password
+  // In production, this should be done server-side
+  
+  if (!current || !newPass || !confirm) {
+    showToast('Please fill in all password fields', 'error');
+    return;
+  }
+  
+  if (newPass !== confirm) {
+    showToast('New passwords do not match', 'error');
+    return;
+  }
+  
+  if (newPass.length < 6) {
+    showToast('Password must be at least 6 characters', 'error');
+    return;
+  }
+  
+  // Update the credentials (in production, this would be server-side)
+  const CREDS = { username: 'mantelet', password: newPass };
+  
+  // Clear password fields
+  document.getElementById('currentPassword').value = '';
+  document.getElementById('newPassword').value = '';
+  document.getElementById('confirmPassword').value = '';
+  
+  showToast('Password changed successfully');
+  logActivity('Password <strong>changed</strong>');
+}
+
+// Initialize profile on load
+initAdminProfile();
+
+// Render profile page when navigated to
+function renderProfileForm() {
+  // Re-initialize profile data when page is opened
+  initAdminProfile();
+}
+
+const DEFAULT_DATA = {
+  // ── HERO ──────────────────────────────────────────────
+  hero: {
+    eyebrow: 'RICS Aligned · Est. 2010',
+    headline1: 'Professional',
+    headline2: 'Quantity Surveying',
+    headline3: '& Construction',
+    headline4: 'Consultancy',
+    subtext: 'Delivering precision cost management, rigorous financial oversight, and project excellence for private and public sector clients across East Africa and beyond.',
+    btn1Text: 'View Our Projects',
+    btn2Text: 'Contact Us',
+    bgImage: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1920&auto=format&fit=crop&q=55',
+    bgType: 'image',
+    bgSource: 'url'
+  },
+
+  // ── STATISTICS ────────────────────────────────────────
+  stats: [
+    { id: 's1', value: 15, suffix: '+', label: 'Years of Excellence', desc: 'Consistent delivery across commercial, residential & infrastructure' },
+    { id: 's2', value: 320, suffix: '+', label: 'Projects Completed', desc: 'From feasibility through to final account settlement' },
+    { id: 's3', value: 98, suffix: '%', label: 'Client Satisfaction Rate', desc: 'Independently measured across all project engagements' },
+    { id: 's4', value: 12, suffix: '', label: 'Countries Served', desc: 'Active presence across the East African region and beyond' }
+  ],
+
+  // ── ABOUT ─────────────────────────────────────────────
+  about: {
+    tagline: 'About Mantelet',
+    heading: 'Trusted Expertise in Quantity Surveying',
+    para1: 'Mantelet Consultants is an elite quantity surveying and project management firm committed to delivering outstanding cost management and project advisory services. We combine deep technical expertise with strategic insight to support clients at every stage — from inception to final account.',
+    para2: 'Our multidisciplinary team of seasoned quantity surveyors, cost managers, and project administrators understands the complexity of modern construction and infrastructure projects across all sectors.',
+    values: [
+      'RICS-aligned professional standards and ethics',
+      'Independent, transparent cost advice at every project phase',
+      'Full lifecycle project consultancy and administration',
+      'Proven track record across public and private sectors'
+    ],
+    image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=900&auto=format&fit=crop&q=70',
+    badgeNumber: '15+',
+    badgeText: 'Years of Excellence'
+  },
+
+  // ── SERVICES ──────────────────────────────────────────
+  services: [
+    { id: 'sv1', number: '01', name: 'Cost Estimation', desc: 'Accurate, evidence-based estimates from early feasibility through detailed pre-tender, benchmarked against industry standards and current market rates.', icon: 'file-text' },
+    { id: 'sv2', number: '02', name: 'Budget Planning', desc: 'Strategic budget development and financial planning frameworks that safeguard your capital investment throughout all construction and development phases.', icon: 'dollar' },
+    { id: 'sv3', number: '03', name: 'Tender Documentation', desc: 'Bills of Quantities, specification writing, and comprehensive tender packages ensuring competitive, transparent and legally sound procurement processes.', icon: 'clipboard' },
+    { id: 'sv4', number: '04', name: 'Cost Control', desc: 'Rigorous real-time cost monitoring, change management, variation analysis, and financial reporting to keep your project firmly within approved budget.', icon: 'bar-chart' },
+    { id: 'sv5', number: '05', name: 'Project Management', desc: 'End-to-end project management with comprehensive programme planning, stakeholder coordination, and quality assurance from mobilisation to practical completion.', icon: 'monitor' },
+    { id: 'sv6', number: '06', name: 'Contract Administration', desc: 'Expert JCT/FIDIC/NEC contract administration, claims evaluation, dispute resolution, and final account settlement to safeguard your commercial position.', icon: 'shield' }
+  ],
+
+  // ── PROJECTS ──────────────────────────────────────────
+  projects: [
+    { id: 'p1', name: 'Westlands Plaza Complex', category: 'commercial', location: 'Nairobi, Kenya', image: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1200&auto=format&fit=crop&q=60', desc: 'Full quantity surveying and cost management for a 26,000m² mixed-use development comprising Grade A office, retail, and residential units valued at KES 3.2B.', catLabel: 'Mixed-Use Development', featured: true },
+    { id: 'p2', name: 'Thika Road Corridor', category: 'infrastructure', location: 'Kiambu County, Kenya', image: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=800&auto=format&fit=crop&q=60', desc: 'Cost management and contract administration for a major road rehabilitation and drainage infrastructure project across 42km.', catLabel: 'Infrastructure', featured: false },
+    { id: 'p3', name: 'Runda Estate Residences', category: 'residential', location: 'Nairobi, Kenya', image: 'https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=800&auto=format&fit=crop&q=60', desc: 'Comprehensive QS for a luxury gated estate of 48 high-specification units, concept budget through final account.', catLabel: 'Luxury Residential', featured: false },
+    { id: 'p4', name: 'Upper Hill Business Park', category: 'commercial', location: 'Nairobi, Kenya', image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&auto=format&fit=crop&q=60', desc: 'Tender documentation and post-contract management for a 12-storey Grade A commercial tower, KES 1.8B contract value.', catLabel: 'Commercial Office', featured: false },
+    { id: 'p5', name: 'Coastal Hospital Extension', category: 'commercial', location: 'Mombasa, Kenya', image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=800&auto=format&fit=crop&q=60', desc: 'Specialist QS for a complex healthcare facility expansion with intricate MEP cost coordination and medical equipment planning.', catLabel: 'Healthcare', featured: false },
+    { id: 'p6', name: 'Kigali Serena Refurbishment', category: 'commercial', location: 'Kigali, Rwanda', image: 'https://images.unsplash.com/photo-1606836576983-8b458e75221d?w=800&auto=format&fit=crop&q=60', desc: 'Full QS and cost management for a five-star hotel refurbishment across 340 rooms, restaurants, and all public areas.', catLabel: 'Hospitality', featured: false }
+  ],
+
+  // ── TESTIMONIALS ──────────────────────────────────────
+  testimonials: [
+    { id: 't1', initials: 'JM', name: 'James Mwangi', role: 'CEO, Apex Properties Ltd · Nairobi', rating: 5, quote: 'Mantelet brought exceptional clarity to a project that had previously suffered from cost overruns. Their precision and proactive cost management saved us significantly and instilled genuine confidence in our board throughout the delivery.' },
+    { id: 't2', initials: 'SK', name: 'Dr. Sarah Kamau', role: 'Director, Medstar Healthcare Group', rating: 5, quote: 'Working with Mantelet on our hospital expansion was a genuinely seamless experience. Their technical knowledge of healthcare construction costs is unmatched, and their contract administration kept our contractors fully accountable.' },
+    { id: 't3', initials: 'RO', name: 'Robert Ochieng', role: 'MD, Horizon Developments · Kampala', rating: 5, quote: 'The professionalism Mantelet demonstrated is rarely encountered in this market. Their BOQ preparation was meticulous and their engagement during the tender process generated genuinely competitive outcomes for our development.' }
+  ],
+
+  // ── CONTACT ───────────────────────────────────────────
+  contact: {
+    address: 'Westlands Business Centre\nWaiyaki Way, Nairobi\nP.O. Box 12345–00100, Kenya',
+    phone1: '+254 700 000 000',
+    phone2: '+254 20 000 0000',
+    email1: 'info@mantelet.co.ke',
+    email2: 'projects@mantelet.co.ke',
+    hours: 'Monday – Friday: 8:00 AM – 5:30 PM\nSaturday: 9:00 AM – 1:00 PM',
+    linkedin: '#',
+    facebook: '#',
+    instagram: '#',
+    mapEmbed: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15955.2!2d36.79!3d-1.268!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f173c0a1f67df%3A0xd3a09e7bfc7ce29d!2sWestlands%2C%20Nairobi!5e0!3m2!1sen!2ske!4v1609459200000!5m2!1sen!2ske'
+  },
+
+  // ── META ──────────────────────────────────────────────
+  meta: {
+    companyName: 'Mantelet Consultants',
+    tagline: 'Precision. Transparency. Excellence.',
+    footerDesc: 'Professional quantity surveying and construction consultancy delivering precision, transparency, and measurable value across East Africa and beyond.',
+    estYear: '2010',
+    ratingScore: '4.9',
+    ratingCount: '86',
+    clients: ['Kenya Airports Authority', 'Safaricom PLC', 'Kenya Power', 'NHBF', 'Radisson Hotels', 'Knight Frank']
+  }
+};
+
+// ── DATA HELPERS ───────────────────────────────────────
+function getData() {
+  try {
+    const stored = localStorage.getItem(MANTALET_DATA_KEY);
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      // Deep merge to pick up any new default keys
+      return deepMerge(DEFAULT_DATA, parsed);
+    }
+  } catch(e) { console.warn('Data parse error, using defaults', e); }
+  return JSON.parse(JSON.stringify(DEFAULT_DATA));
+}
+
+function saveData(data) {
+  try {
+    localStorage.setItem(MANTALET_DATA_KEY, JSON.stringify(data));
+    return true;
+  } catch(e) {
+    console.error('Save failed', e);
+    return false;
+  }
+}
+
+function resetData() {
+  localStorage.removeItem(MANTALET_DATA_KEY);
+  return JSON.parse(JSON.stringify(DEFAULT_DATA));
+}
+
+function deepMerge(defaults, overrides) {
+  const result = JSON.parse(JSON.stringify(defaults));
+  for (const key in overrides) {
+    if (overrides[key] !== null && typeof overrides[key] === 'object' && !Array.isArray(overrides[key])) {
+      result[key] = deepMerge(result[key] || {}, overrides[key]);
+    } else {
+      result[key] = overrides[key];
+    }
+  }
+  return result;
+}
+
+function generateId(prefix) {
+  return prefix + '_' + Date.now() + '_' + Math.random().toString(36).substr(2,6);
+}
+
+</script>
+<script>
+'use strict';
+
+// ── AUTH GUARD ────────────────────────────────────────
+(function(){
+  if(sessionStorage.getItem('mc_admin_auth')!=='true'){
+    window.location.href='admin-login.html';
+  }
+  const u=sessionStorage.getItem('mc_admin_user')||'admin';
+  const el=document.querySelector('.sidebar-user-name');
+  if(el)el.textContent=u.charAt(0).toUpperCase()+u.slice(1)+' User';
+})();
+
+// ══════════════════════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════════════════════
+let siteData = getData();
+let currentModal = null;
+let modalData = {};
+let saveTimer = null;
+
+// ══════════════════════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  updateDashCounts();
+  renderSummaryGrid();
+  renderHeroForm();
+  renderAboutForm();
+  renderServicesTable();
+  renderProjectsTable();
+  renderTestiCards();
+  renderStatsCards();
+  renderContactForm();
+  renderMetaForm();
+  logActivity('Site data loaded successfully');
+});
+
+// ══════════════════════════════════════════════════════
+//  NAVIGATION
+// ══════════════════════════════════════════════════════
+const PAGE_LABELS = {
+  dashboard: 'Dashboard',
+  hero: 'Hero Section',
+  about: 'About',
+  services: 'Services',
+  projects: 'Projects',
+  testimonials: 'Testimonials',
+  stats: 'Statistics',
+  contact: 'Contact Info',
+  meta: 'Site Settings',
+  profile: 'My Profile'
+};
+
+function navigate(pageId, el) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const pageEl = document.getElementById('page-' + pageId);
+  if (pageEl) pageEl.classList.add('active');
+  if (el) el.classList.add('active');
+  else {
+    const ni = document.querySelector(`[data-page="${pageId}"]`);
+    if (ni) ni.classList.add('active');
+  }
+  document.getElementById('topbarTitle').textContent = PAGE_LABELS[pageId] || pageId;
+  document.getElementById('topbarCrumb').textContent = PAGE_LABELS[pageId] || pageId;
+  closeSidebar();
+  
+  // Initialize page-specific content
+  if (pageId === 'profile') {
+    renderProfileForm();
+  }
+}
+
+function openPublicSite() {
+  window.open('index.html', '_blank');
+}
+
+// ══════════════════════════════════════════════════════
+//  SAVE
+// ══════════════════════════════════════════════════════
+function scheduleSave() {
+  clearTimeout(saveTimer);
+  const statusEl = document.getElementById('saveStatus');
+  statusEl.innerHTML = `<div class="save-status-dot" style="background:#f59e0b"></div> Saving…`;
+  saveTimer = setTimeout(() => {
+    const ok = saveData(siteData);
+    if (ok) {
+      statusEl.innerHTML = `<div class="save-status-dot"></div> All changes saved`;
+      showToast('Changes saved successfully', 'success');
+    } else {
+      statusEl.innerHTML = `<div class="save-status-dot" style="background:#dc2626"></div> Save failed`;
+      showToast('Save failed — storage may be full', 'error');
+    }
+    updateDashCounts();
+    renderSummaryGrid();
+  }, 800);
+}
+
+// ══════════════════════════════════════════════════════
+//  TOAST
+// ══════════════════════════════════════════════════════
+function showToast(msg, type = 'success') {
+  const icons = {
+    success: '<path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>',
+    error: '<circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>',
+    warn: '<path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>'
+  };
+  const c = document.getElementById('toastContainer');
+  const t = document.createElement('div');
+  t.className = `toast ${type !== 'success' ? type : ''}`;
+  t.innerHTML = `<svg viewBox="0 0 24 24">${icons[type]||icons.success}</svg>${msg}`;
+  c.appendChild(t);
+  setTimeout(() => { t.style.opacity='0'; t.style.transform='translateX(20px)'; t.style.transition='all .3s'; setTimeout(()=>t.remove(),300); }, 3500);
+}
+
+// ══════════════════════════════════════════════════════
+//  ACTIVITY LOG
+// ══════════════════════════════════════════════════════
+const activities = [];
+function logActivity(text) {
+  const now = new Date();
+  const time = now.toLocaleTimeString('en-GB', {hour:'2-digit',minute:'2-digit'});
+  activities.unshift({ text, time });
+  const list = document.getElementById('activityList');
+  if (!list) return;
+  list.innerHTML = activities.slice(0,6).map(a =>
+    `<div class="activity-item"><div class="activity-dot"></div><span class="activity-text">${a.text}</span><span class="activity-time">${a.time}</span></div>`
+  ).join('');
+}
+
+// ══════════════════════════════════════════════════════
+//  DASHBOARD
+// ══════════════════════════════════════════════════════
+function updateDashCounts() {
+  const d = siteData;
+  setText('dc-projects', d.projects.length);
+  setText('dc-testimonials', d.testimonials.length);
+  setText('dc-services', d.services.length);
+  setText('dc-stats', d.stats.length);
+  setText('projBadge', d.projects.length);
+  setText('testiBadge', d.testimonials.length);
+}
+
+function setText(id, val) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = val;
+}
+
+function renderSummaryGrid() {
+  const d = siteData;
+  const items = [
+    { label: 'Hero Headline', val: d.hero.headline1 + ' ' + d.hero.headline2, icon: 'M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7' },
+    { label: 'Company Name', val: d.meta.companyName, icon: 'M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z' },
+    { label: 'Total Projects', val: d.projects.length + ' projects', icon: 'M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z' },
+    { label: 'Contact Email', val: d.contact.email1, icon: 'M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z' },
+    { label: 'Testimonials', val: d.testimonials.length + ' reviews', icon: 'M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z' },
+    { label: 'Footer Tagline', val: d.meta.tagline, icon: 'M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z' }
+  ];
+  const g = document.getElementById('summaryGrid');
+  if (!g) return;
+  g.innerHTML = items.map(item => `
+    <div style="display:flex;gap:.85rem;align-items:flex-start;padding:.75rem;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg)">
+      <div style="width:34px;height:34px;background:var(--teal-ll);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal-dd)" stroke-width="1.8"><path d="${item.icon}"/></svg>
+      </div>
+      <div style="overflow:hidden">
+        <div style="font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-s);margin-bottom:.2rem">${item.label}</div>
+        <div style="font-size:.875rem;color:var(--text-h);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${escHtml(item.val)}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ══════════════════════════════════════════════════════
+//  HERO FORM
+// ══════════════════════════════════════════════════════
+function renderHeroForm() {
+  const h = siteData.hero;
+  document.getElementById('heroForm').innerHTML = `
+    <div class="card-head"><span class="card-title">Hero Section Editor</span>
+      <button class="btn btn-primary btn-sm" onclick="saveHero()"><svg viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>Save Hero</button>
+    </div>
+    <div class="card-body">
+      <div class="form-row">
+        <div class="fg"><label class="fl">Eyebrow Text</label><input class="fi" id="h_eyebrow" value="${escHtml(h.eyebrow)}"></div>
+        <div class="fg"><label class="fl">Button 1 Text</label><input class="fi" id="h_btn1" value="${escHtml(h.btn1Text)}"></div>
+      </div>
+      <div class="fg"><label class="fl">Headline Line 1</label><input class="fi" id="h_hl1" value="${escHtml(h.headline1)}"></div>
+      <div class="fg"><label class="fl">Headline Line 2 (italic/accent)</label><input class="fi" id="h_hl2" value="${escHtml(h.headline2)}"></div>
+      <div class="form-row">
+        <div class="fg"><label class="fl">Headline Line 3</label><input class="fi" id="h_hl3" value="${escHtml(h.headline3)}"></div>
+        <div class="fg"><label class="fl">Headline Line 4</label><input class="fi" id="h_hl4" value="${escHtml(h.headline4)}"></div>
+      </div>
+      <div class="fg"><label class="fl">Subtext / Description</label><textarea class="ft" id="h_sub" rows="3">${escHtml(h.subtext)}</textarea></div>
+      <div class="fg">
+        <label class="fl">Background Type</label>
+        <select class="fi" id="h_bg_type" onchange="toggleBgInput()">
+          <option value="image" ${h.bgType !== 'video' ? 'selected' : ''}>Image</option>
+          <option value="video" ${h.bgType === 'video' ? 'selected' : ''}>Video</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label class="fl">Background Source</label>
+        <select class="fi" id="h_bg_source" onchange="toggleBgInput()">
+          <option value="url" ${h.bgSource !== 'upload' ? 'selected' : ''}>URL</option>
+          <option value="upload" ${h.bgSource === 'upload' ? 'selected' : ''}>Upload File</option>
+        </select>
+      </div>
+      <div class="fg" id="h_bg_url_wrap">
+        <label class="fl">Background ${h.bgType === 'video' ? 'Video' : 'Image'} URL</label>
+        <input class="fi" id="h_bg" value="${escHtml(h.bgImage)}" oninput="previewBg()">
+        <p class="img-url-hint">Paste a direct ${h.bgType === 'video' ? 'video' : 'image'} URL. Recommended: 1920×1080px for images.</p>
+      </div>
+      <div class="fg" id="h_bg_upload_wrap" style="display:${h.bgSource === 'upload' ? 'block' : 'none'}">
+        <label class="fl">Upload ${h.bgType === 'video' ? 'Video' : 'Image'} File</label>
+        <input type="file" class="fi" id="h_bg_file" accept="${h.bgType === 'video' ? 'video/*' : 'image/*'}" onchange="handleFileUpload('h_bg_file', 'h_bg')">
+        <p class="img-url-hint">Max file size: 10MB. Supported: ${h.bgType === 'video' ? 'MP4, WebM' : 'JPG, PNG, WebP'}</p>
+      </div>
+      <div class="fg">
+        <div id="h_bg_prev" class="img-preview ${h.bgImage?'show':''}" style="${h.bgType === 'video' ? 'max-height:200px;' : ''}">
+          ${h.bgType === 'video' && h.bgImage ? `<video controls src="${h.bgImage}" style="max-width:100%;max-height:200px;"></video>` : 
+            h.bgImage ? `<img src="${h.bgImage}" alt="Hero background preview">` : ''}
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label class="fl">Button 2 Text</label><input class="fi" id="h_btn2" value="${escHtml(h.btn2Text)}"></div>
+      </div>
+    </div>
+  `;
+}
+
+function saveHero() {
+  siteData.hero = {
+    eyebrow: val('h_eyebrow'), headline1: val('h_hl1'), headline2: val('h_hl2'),
+    headline3: val('h_hl3'), headline4: val('h_hl4'), subtext: val('h_sub'),
+    btn1Text: val('h_btn1'), btn2Text: val('h_btn2'),
+    bgImage: val('h_bg'),
+    bgType: val('h_bg_type') || 'image',
+    bgSource: val('h_bg_source') || 'url'
+  };
+  logActivity('Hero section <strong>updated</strong>');
+  scheduleSave();
+}
+
+// ══════════════════════════════════════════════════════
+//  ABOUT FORM
+// ══════════════════════════════════════════════════════
+function renderAboutForm() {
+  const a = siteData.about;
+  document.getElementById('aboutForm').innerHTML = `
+    <div class="card-head"><span class="card-title">About Section Editor</span>
+      <button class="btn btn-primary btn-sm" onclick="saveAbout()"><svg viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>Save About</button>
+    </div>
+    <div class="card-body">
+      <div class="form-row">
+        <div class="fg"><label class="fl">Section Tagline</label><input class="fi" id="a_tagline" value="${escHtml(a.tagline)}"></div>
+        <div class="fg"><label class="fl">Section Heading</label><input class="fi" id="a_heading" value="${escHtml(a.heading)}"></div>
+      </div>
+      <div class="fg"><label class="fl">Paragraph 1</label><textarea class="ft" id="a_p1">${escHtml(a.para1)}</textarea></div>
+      <div class="fg"><label class="fl">Paragraph 2</label><textarea class="ft" id="a_p2">${escHtml(a.para2)}</textarea></div>
+      <div class="fg"><label class="fl">Company Values (one per line)</label><textarea class="ft" id="a_vals" rows="5">${a.values.map(v=>escHtml(v)).join('\n')}</textarea></div>
+      <div class="form-row">
+        <div class="fg"><label class="fl">Badge Number</label><input class="fi" id="a_bnum" value="${escHtml(a.badgeNumber)}"></div>
+        <div class="fg"><label class="fl">Badge Text</label><input class="fi" id="a_btxt" value="${escHtml(a.badgeText)}"></div>
+      </div>
+      <div class="fg">
+        <label class="fl">About Image URL</label>
+        <input class="fi" id="a_img" value="${escHtml(a.image)}" oninput="previewImg('a_img','a_img_prev')">
+        <img id="a_img_prev" class="img-preview ${a.image?'show':''}" src="${a.image}" alt="About image preview">
+      </div>
+    </div>
+  `;
+}
+
+function saveAbout() {
+  siteData.about = {
+    tagline: val('a_tagline'), heading: val('a_heading'),
+    para1: val('a_p1'), para2: val('a_p2'),
+    values: val('a_vals').split('\n').map(v=>v.trim()).filter(Boolean),
+    badgeNumber: val('a_bnum'), badgeText: val('a_btxt'),
+    image: val('a_img')
+  };
+  logActivity('About section <strong>updated</strong>');
+  scheduleSave();
+}
+
+// ══════════════════════════════════════════════════════
+//  SERVICES
+// ══════════════════════════════════════════════════════
+function renderServicesTable() {
+  const tbody = document.getElementById('servicesTable');
+  if (!tbody) return;
+  tbody.innerHTML = siteData.services.map((s, i) => `
+    <tr>
+      <td><span style="font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;color:var(--teal)">${s.number}</span></td>
+      <td><strong style="font-size:.9rem;color:var(--text-h)">${escHtml(s.name)}</strong></td>
+      <td style="max-width:320px;color:var(--text-m);font-size:.83rem">${escHtml(s.desc.slice(0,90))}…</td>
+      <td style="text-align:right">
+        <div class="td-actions">
+          <button class="btn btn-secondary btn-sm btn-icon" title="Edit" onclick="editService(${i})"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+          <button class="btn btn-danger btn-sm btn-icon" title="Delete" onclick="deleteService(${i})"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6m5 0V4h4v2"/></svg></button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function editService(idx) {
+  const s = siteData.services[idx];
+  modalData = { type: 'service', idx };
+  openModal('Edit Service', `
+    <div class="fg"><label class="fl">Service Number</label><input class="fi" id="m_snum" value="${escHtml(s.number)}"></div>
+    <div class="fg"><label class="fl">Service Name</label><input class="fi" id="m_sname" value="${escHtml(s.name)}"></div>
+    <div class="fg"><label class="fl">Description</label><textarea class="ft" id="m_sdesc">${escHtml(s.desc)}</textarea></div>
+  `);
+}
+
+function addService() {
+  modalData = { type: 'service', idx: -1 };
+  const num = String(siteData.services.length + 1).padStart(2, '0');
+  openModal('Add Service', `
+    <div class="fg"><label class="fl">Service Number</label><input class="fi" id="m_snum" value="${num}"></div>
+    <div class="fg"><label class="fl">Service Name</label><input class="fi" id="m_sname" placeholder="e.g. Feasibility Studies"></div>
+    <div class="fg"><label class="fl">Description</label><textarea class="ft" id="m_sdesc" placeholder="Brief description of the service..."></textarea></div>
+  `);
+}
+
+function deleteService(idx) {
+  if (!confirm(`Delete service "${siteData.services[idx].name}"?`)) return;
+  const name = siteData.services[idx].name;
+  siteData.services.splice(idx, 1);
+  renderServicesTable();
+  logActivity(`Service <strong>${name}</strong> deleted`);
+  scheduleSave();
+}
+
+// ══════════════════════════════════════════════════════
+//  PROJECTS
+// ══════════════════════════════════════════════════════
+function renderProjectsTable() {
+  const tbody = document.getElementById('projectsTable');
+  if (!tbody) return;
+  tbody.innerHTML = siteData.projects.map((p, i) => `
+    <tr>
+      <td><img src="${p.image}" class="td-img" alt="${escHtml(p.name)}" onerror="this.style.background='var(--bg2)';this.src=''"></td>
+      <td><strong style="font-size:.9rem;color:var(--text-h)">${escHtml(p.name)}</strong></td>
+      <td><span class="badge-cat">${escHtml(p.category)}</span></td>
+      <td style="font-size:.83rem;color:var(--text-m)">${escHtml(p.location)}</td>
+      <td><span class="${p.featured?'badge-cat badge-featured':'badge-cat'}" style="font-size:.68rem">${p.featured?'⭐ Featured':'—'}</span></td>
+      <td style="text-align:right">
+        <div class="td-actions">
+          <button class="btn btn-secondary btn-sm btn-icon" title="Edit" onclick="editProject(${i})"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+          <button class="btn btn-danger btn-sm btn-icon" title="Delete" onclick="deleteProject(${i})"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6m5 0V4h4v2"/></svg></button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+  setText('projBadge', siteData.projects.length);
+}
+
+function editProject(idx) {
+  const p = siteData.projects[idx];
+  modalData = { type: 'project', idx };
+  openModal('Edit Project', projectFormHTML(p));
+}
+
+function addProject() {
+  modalData = { type: 'project', idx: -1 };
+  openModal('Add Project', projectFormHTML({}));
+}
+
+function projectFormHTML(p = {}) {
+  const cats = ['commercial','residential','infrastructure','hospitality','healthcare'];
+  return `
+    <div class="fg"><label class="fl">Project Name</label><input class="fi" id="m_pname" value="${escHtml(p.name||'')}"></div>
+    <div class="form-row">
+      <div class="fg"><label class="fl">Category Label</label><input class="fi" id="m_pcatlabel" value="${escHtml(p.catLabel||'')}"></div>
+      <div class="fg"><label class="fl">Category (filter key)</label>
+        <select class="fs" id="m_pcat">
+          ${cats.map(c=>`<option value="${c}" ${p.category===c?'selected':''}>${c}</option>`).join('')}
+        </select>
+      </div>
+    </div>
+    <div class="fg"><label class="fl">Location</label><input class="fi" id="m_ploc" value="${escHtml(p.location||'')}"></div>
+    <div class="fg"><label class="fl">Description</label><textarea class="ft" id="m_pdesc">${escHtml(p.desc||'')}</textarea></div>
+    <div class="fg">
+      <label class="fl">Media Type</label>
+      <select class="fi" id="m_pmtype" onchange="toggleProjectMedia()">
+        <option value="image" ${p.mediaType !== 'video' ? 'selected' : ''}>Image</option>
+        <option value="video" ${p.mediaType === 'video' ? 'selected' : ''}>Video</option>
+      </select>
+    </div>
+    <div class="fg">
+      <label class="fl">Media Source</label>
+      <select class="fi" id="m_pmsource" onchange="toggleProjectMedia()">
+        <option value="url" ${p.mediaSource !== 'upload' ? 'selected' : ''}>URL</option>
+        <option value="upload" ${p.mediaSource === 'upload' ? 'selected' : ''}>Upload File</option>
+      </select>
+    </div>
+    <div class="fg" id="m_pmurl_wrap">
+      <label class="fl">${p.mediaType === 'video' ? 'Video' : 'Image'} URL</label>
+      <input class="fi" id="m_pimg" value="${escHtml(p.image||'')}" oninput="previewProjectMedia()">
+      <p class="img-url-hint">Paste a direct ${p.mediaType === 'video' ? 'video' : 'image'} URL.</p>
+    </div>
+    <div class="fg" id="m_pmupload_wrap" style="display:${p.mediaSource === 'upload' ? 'block' : 'none'}">
+      <label class="fl">Upload ${p.mediaType === 'video' ? 'Video' : 'Image'} File</label>
+      <input type="file" class="fi" id="m_pmfile" accept="${p.mediaType === 'video' ? 'video/*' : 'image/*'}" onchange="handleFileUpload('m_pmfile', 'm_pimg')">
+      <p class="img-url-hint">Max file size: 10MB. Supported: ${p.mediaType === 'video' ? 'MP4, WebM' : 'JPG, PNG, WebP'}</p>
+    </div>
+    <div class="fg">
+      <div id="m_pimg_prev" class="img-preview ${p.image?'show':''}" style="${p.mediaType === 'video' ? 'max-height:200px;' : ''}">
+        ${p.mediaType === 'video' && p.image ? `<video controls src="${p.image}" style="max-width:100%;max-height:200px;"></video>` : 
+          p.image ? `<img src="${p.image}" alt="Project media preview">` : ''}
+      </div>
+    </div>
+    <div class="toggle-wrap" style="margin-top:.5rem">
+      <div class="toggle ${p.featured?'on':''}" id="m_pfeatured" onclick="this.classList.toggle('on')"><div class="toggle-thumb"></div></div>
+      <span class="toggle-label">Featured project (appears larger)</span>
+    </div>
+  `;
+}
+
+function deleteProject(idx) {
+  if (!confirm(`Delete project "${siteData.projects[idx].name}"?`)) return;
+  const name = siteData.projects[idx].name;
+  siteData.projects.splice(idx, 1);
+  renderProjectsTable();
+  logActivity(`Project <strong>${name}</strong> deleted`);
+  scheduleSave();
+}
+
+// ══════════════════════════════════════════════════════
+//  TESTIMONIALS
+// ══════════════════════════════════════════════════════
+function renderTestiCards() {
+  const c = document.getElementById('testiCards');
+  if (!c) return;
+  c.innerHTML = siteData.testimonials.map((t, i) => `
+    <div class="card" style="transition:transform .25s,box-shadow .25s" onmouseenter="this.style.transform='translateY(-3px)';this.style.boxShadow='var(--shadow-md)'" onmouseleave="this.style.transform='';this.style.boxShadow=''">
+      <div style="padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
+        <div style="display:flex;align-items:center;gap:.75rem">
+          <div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--teal-d),var(--cyan-d));display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:.85rem;font-weight:700;color:#fff;flex-shrink:0">${escHtml(t.initials)}</div>
+          <div>
+            <div style="font-weight:600;font-size:.9rem;color:var(--text-h)">${escHtml(t.name)}</div>
+            <div style="font-size:.75rem;color:var(--text-m)">${escHtml(t.role)}</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:.3rem">
+          <button class="btn btn-secondary btn-sm btn-icon" title="Edit" onclick="editTestimonial(${i})"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+          <button class="btn btn-danger btn-sm btn-icon" title="Delete" onclick="deleteTestimonial(${i})"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6m5 0V4h4v2"/></svg></button>
+        </div>
+      </div>
+      <div style="padding:1.25rem 1.5rem">
+        <div style="display:flex;gap:2px;margin-bottom:.75rem">${'★'.repeat(t.rating)}<span style="color:var(--text-s)">${'★'.repeat(5-t.rating)}</span></div>
+        <p style="font-size:.875rem;line-height:1.7;color:var(--text-b);font-style:italic">"${escHtml(t.quote.slice(0,140))}${t.quote.length>140?'…':''}"</p>
+      </div>
+    </div>
+  `).join('') + `
+    <div class="card" style="border-style:dashed;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2.5rem;gap:.75rem;cursor:pointer;min-height:180px;transition:all .25s" onclick="addTestimonial()" onmouseenter="this.style.borderColor='var(--teal)';this.style.background='var(--teal-pale)'" onmouseleave="this.style.borderColor='';this.style.background=''">
+      <div style="width:48px;height:48px;border:2px dashed var(--teal-l);border-radius:50%;display:flex;align-items:center;justify-content:center">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+      </div>
+      <span style="font-size:.85rem;font-weight:600;color:var(--teal)">Add New Testimonial</span>
+    </div>
+  `;
+  setText('testiBadge', siteData.testimonials.length);
+}
+
+function editTestimonial(idx) {
+  const t = siteData.testimonials[idx];
+  modalData = { type: 'testimonial', idx };
+  openModal('Edit Testimonial', testiFormHTML(t));
+}
+
+function addTestimonial() {
+  modalData = { type: 'testimonial', idx: -1 };
+  openModal('Add Testimonial', testiFormHTML({}));
+}
+
+function testiFormHTML(t = {}) {
+  return `
+    <div class="form-row">
+      <div class="fg"><label class="fl">Client Initials</label><input class="fi" id="m_tini" value="${escHtml(t.initials||'')}" placeholder="JM" maxlength="3"></div>
+      <div class="fg"><label class="fl">Client Name</label><input class="fi" id="m_tname" value="${escHtml(t.name||'')}"></div>
+    </div>
+    <div class="fg"><label class="fl">Role / Company</label><input class="fi" id="m_trole" value="${escHtml(t.role||'')}" placeholder="CEO, Example Company · City"></div>
+    <div class="fg"><label class="fl">Star Rating</label>
+      <div class="star-rating" id="m_tstars">
+        ${[1,2,3,4,5].map(n=>`<button type="button" class="star-btn ${(t.rating||5)>=n?'on':''}" data-val="${n}" onclick="setStars(${n})">★</button>`).join('')}
+      </div>
+      <input type="hidden" id="m_trating" value="${t.rating||5}">
+    </div>
+    <div class="fg"><label class="fl">Client Photo (Optional)</label>
+      <input type="file" class="fi" id="m_timg" accept="image/*" onchange="handleTestimonialImageUpload()">
+      <p class="img-url-hint">Upload client photo. If no photo is uploaded, initials will be used as fallback.</p>
+      <div id="m_timg_prev" class="img-preview ${t.image?'show':''}" style="max-width:100px;max-height:100px;border-radius:50%;overflow:hidden;">
+        ${t.image ? `<img src="${t.image}" alt="Client photo" style="width:100%;height:100%;object-fit:cover;">` : ''}
+      </div>
+      <input type="hidden" id="m_timg_data" value="${t.image||''}">
+    </div>
+    <div class="fg"><label class="fl">Testimonial Quote</label><textarea class="ft" id="m_tquote" rows="4" placeholder="What the client said about working with Mantelet…">${escHtml(t.quote||'')}</textarea></div>
+  `;
+}
+
+function setStars(val) {
+  document.getElementById('m_trating').value = val;
+  document.querySelectorAll('#m_tstars .star-btn').forEach(b => b.classList.toggle('on', parseInt(b.dataset.val) <= val));
+}
+
+function deleteTestimonial(idx) {
+  if (!confirm(`Delete testimonial from "${siteData.testimonials[idx].name}"?`)) return;
+  const name = siteData.testimonials[idx].name;
+  siteData.testimonials.splice(idx, 1);
+  renderTestiCards();
+  logActivity(`Testimonial from <strong>${name}</strong> deleted`);
+  scheduleSave();
+}
+
+// ══════════════════════════════════════════════════════
+//  STATISTICS
+// ══════════════════════════════════════════════════════
+function renderStatsCards() {
+  const c = document.getElementById('statsCards');
+  if (!c) return;
+  c.innerHTML = siteData.stats.map((s, i) => `
+    <div class="card">
+      <div style="padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center">
+        <div style="font-family:'Syne',sans-serif;font-size:.9rem;font-weight:600;color:var(--text-h)">${escHtml(s.label)}</div>
+        <div style="display:flex;gap:.35rem">
+          <button class="btn btn-secondary btn-sm btn-icon" onclick="editStat(${i})"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+          <button class="btn btn-danger btn-sm btn-icon" onclick="deleteStat(${i})"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6m5 0V4h4v2"/></svg></button>
+        </div>
+      </div>
+      <div style="padding:1.5rem;text-align:center">
+        <div style="font-family:'Syne',sans-serif;font-size:3rem;font-weight:700;color:var(--teal);line-height:1">${s.value}<span style="font-size:1.6rem;color:var(--teal-d)">${escHtml(s.suffix)}</span></div>
+        <div style="font-size:.8rem;color:var(--text-m);margin-top:.5rem">${escHtml(s.desc||'')}</div>
+      </div>
+    </div>
+  `).join('') + `
+    <div class="card" style="border-style:dashed;display:flex;align-items:center;justify-content:center;padding:2.5rem;cursor:pointer;transition:all .25s;min-height:160px" onclick="addStat()" onmouseenter="this.style.borderColor='var(--teal)';this.style.background='var(--teal-pale)'" onmouseleave="this.style.borderColor='';this.style.background=''">
+      <div style="text-align:center">
+        <div style="font-size:.85rem;font-weight:600;color:var(--teal)">+ Add Statistic</div>
+      </div>
+    </div>
+  `;
+}
+
+function editStat(idx) {
+  const s = siteData.stats[idx];
+  modalData = { type: 'stat', idx };
+  openModal('Edit Statistic', statFormHTML(s));
+}
+
+function addStat() {
+  modalData = { type: 'stat', idx: -1 };
+  openModal('Add Statistic', statFormHTML({}));
+}
+
+function statFormHTML(s = {}) {
+  return `
+    <div class="form-row">
+      <div class="fg"><label class="fl">Number Value</label><input class="fi" id="m_sval" type="number" value="${s.value||0}"></div>
+      <div class="fg"><label class="fl">Suffix (e.g. +, %, B+)</label><input class="fi" id="m_ssuf" value="${escHtml(s.suffix||'')}"></div>
+    </div>
+    <div class="fg"><label class="fl">Label</label><input class="fi" id="m_slbl" value="${escHtml(s.label||'')}"></div>
+    <div class="fg"><label class="fl">Description</label><input class="fi" id="m_sdsc" value="${escHtml(s.desc||'')}"></div>
+  `;
+}
+
+function deleteStat(idx) {
+  if (!confirm('Delete this statistic?')) return;
+  siteData.stats.splice(idx, 1);
+  renderStatsCards();
+  logActivity('Statistic <strong>deleted</strong>');
+  scheduleSave();
+}
+
+// ══════════════════════════════════════════════════════
+//  CONTACT FORM
+// ══════════════════════════════════════════════════════
+function renderContactForm() {
+  const c = siteData.contact;
+  document.getElementById('contactForm').innerHTML = `
+    <div class="card-head"><span class="card-title">Contact Information Editor</span>
+      <button class="btn btn-primary btn-sm" onclick="saveContact()"><svg viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>Save Contact</button>
+    </div>
+    <div class="card-body">
+      <div class="fg"><label class="fl">Office Address</label><textarea class="ft" id="c_addr" rows="3">${escHtml(c.address)}</textarea></div>
+      <div class="form-row">
+        <div class="fg"><label class="fl">Phone 1</label><input class="fi" id="c_ph1" value="${escHtml(c.phone1)}"></div>
+        <div class="fg"><label class="fl">Phone 2</label><input class="fi" id="c_ph2" value="${escHtml(c.phone2)}"></div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label class="fl">Email 1</label><input class="fi" id="c_em1" type="email" value="${escHtml(c.email1)}"></div>
+        <div class="fg"><label class="fl">Email 2</label><input class="fi" id="c_em2" type="email" value="${escHtml(c.email2)}"></div>
+      </div>
+      <div class="fg"><label class="fl">Office Hours</label><textarea class="ft" id="c_hrs" rows="2">${escHtml(c.hours)}</textarea></div>
+      <div class="fg"><label class="fl">Google Maps Embed URL</label><input class="fi" id="c_map" value="${escHtml(c.mapEmbed)}"><p class="img-url-hint">Get from Google Maps → Share → Embed → copy the src URL only</p></div>
+    </div>
+  `;
+}
+
+function saveContact() {
+  siteData.contact = {
+    address: val('c_addr'), phone1: val('c_ph1'), phone2: val('c_ph2'),
+    email1: val('c_em1'), email2: val('c_em2'), hours: val('c_hrs'),
+    mapEmbed: val('c_map')
+  };
+  logActivity('Contact info <strong>updated</strong>');
+  scheduleSave();
+}
+
+// ══════════════════════════════════════════════════════
+//  META / SETTINGS
+// ══════════════════════════════════════════════════════
+function renderMetaForm() {
+  const m = siteData.meta;
+  document.getElementById('metaForm').innerHTML = `
+    <div class="card-head"><span class="card-title">Global Site Settings</span>
+      <button class="btn btn-primary btn-sm" onclick="saveMeta()"><svg viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>Save Settings</button>
+    </div>
+    <div class="card-body">
+      <div class="form-row">
+        <div class="fg"><label class="fl">Company Name</label><input class="fi" id="m_cname" value="${escHtml(m.companyName)}"></div>
+        <div class="fg"><label class="fl">Established Year</label><input class="fi" id="m_year" value="${escHtml(m.estYear)}"></div>
+      </div>
+      <div class="fg"><label class="fl">Footer Tagline</label><input class="fi" id="m_tag" value="${escHtml(m.tagline)}"></div>
+      <div class="fg"><label class="fl">Footer Description</label><textarea class="ft" id="m_fdesc">${escHtml(m.footerDesc)}</textarea></div>
+      <div class="form-row">
+        <div class="fg"><label class="fl">Rating Score (e.g. 4.9)</label><input class="fi" id="m_rscore" value="${escHtml(m.ratingScore)}" type="number" step="0.1" max="5"></div>
+        <div class="fg"><label class="fl">Rating Count (e.g. 86 reviews)</label><input class="fi" id="m_rcount" value="${escHtml(m.ratingCount)}"></div>
+      </div>
+      <div class="fg">
+        <label class="fl">Client Logos / Names (one per line)</label>
+        <textarea class="ft" id="m_clients" rows="4">${m.clients.map(c=>escHtml(c)).join('\n')}</textarea>
+      </div>
+    </div>
+  `;
+}
+
+function saveMeta() {
+  siteData.meta = {
+    companyName: val('m_cname'), estYear: val('m_year'),
+    tagline: val('m_tag'), footerDesc: val('m_fdesc'),
+    ratingScore: val('m_rscore'), ratingCount: val('m_rcount'),
+    clients: val('m_clients').split('\n').map(v=>v.trim()).filter(Boolean)
+  };
+  logActivity('Site settings <strong>updated</strong>');
+  scheduleSave();
+  renderSummaryGrid();
+}
+
+// ══════════════════════════════════════════════════════
+//  MODAL ENGINE
+// ══════════════════════════════════════════════════════
+function openModal(title, bodyHTML) {
+  document.getElementById('modalTitle').textContent = title;
+  document.getElementById('modalBody').innerHTML = bodyHTML;
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+  modalData = {};
+}
+
+document.getElementById('modalOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+function saveModal() {
+  const { type, idx } = modalData;
+
+  if (type === 'service') {
+    const item = { id: idx >= 0 ? siteData.services[idx].id : generateId('sv'), number: val('m_snum'), name: val('m_sname'), desc: val('m_sdesc'), icon: 'file-text' };
+    if (idx >= 0) siteData.services[idx] = item; else siteData.services.push(item);
+    renderServicesTable();
+    logActivity(`Service <strong>${item.name}</strong> ${idx>=0?'updated':'added'}`);
+  }
+
+  if (type === 'project') {
+    const feat = document.getElementById('m_pfeatured');
+    const item = {
+      id: idx >= 0 ? siteData.projects[idx].id : generateId('p'),
+      name: val('m_pname'), catLabel: val('m_pcatlabel'),
+      category: val('m_pcat'), location: val('m_ploc'),
+      desc: val('m_pdesc'), image: val('m_pimg'),
+      mediaType: val('m_pmtype') || 'image',
+      mediaSource: val('m_pmsource') || 'url',
+      featured: feat ? feat.classList.contains('on') : false
+    };
+    if (idx >= 0) siteData.projects[idx] = item; else siteData.projects.push(item);
+    renderProjectsTable();
+    logActivity(`Project <strong>${item.name}</strong> ${idx>=0?'updated':'added'}`);
+  }
+
+  if (type === 'testimonial') {
+    const imageData = val('m_timg_data');
+    const item = {
+      id: idx >= 0 ? siteData.testimonials[idx].id : generateId('t'),
+      initials: val('m_tini'), name: val('m_tname'),
+      role: val('m_trole'), rating: parseInt(val('m_trating'))||5,
+      quote: val('m_tquote'),
+      image: imageData || undefined
+    };
+    if (idx >= 0) siteData.testimonials[idx] = item; else siteData.testimonials.push(item);
+    renderTestiCards();
+    logActivity(`Testimonial from <strong>${item.name}</strong> ${idx>=0?'updated':'added'}`);
+  }
+
+  if (type === 'stat') {
+    const item = {
+      id: idx >= 0 ? siteData.stats[idx].id : generateId('s'),
+      value: parseInt(val('m_sval'))||0,
+      suffix: val('m_ssuf'), label: val('m_slbl'), desc: val('m_sdsc')
+    };
+    if (idx >= 0) siteData.stats[idx] = item; else siteData.stats.push(item);
+    renderStatsCards();
+    logActivity(`Statistic <strong>${item.label}</strong> ${idx>=0?'updated':'added'}`);
+  }
+
+  closeModal();
+  updateDashCounts();
+  scheduleSave();
+}
+
+// ══════════════════════════════════════════════════════
+//  HELPERS
+// ══════════════════════════════════════════════════════
+function val(id) {
+  const el = document.getElementById(id);
+  return el ? el.value.trim() : '';
+}
+
+function escHtml(str) {
+  if (!str && str !== 0) return '';
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function previewImg(inputId, previewId) {
+  const url = document.getElementById(inputId)?.value?.trim();
+  const prev = document.getElementById(previewId);
+  if (!prev) return;
+  if (url) { prev.src = url; prev.classList.add('show'); }
+  else { prev.classList.remove('show'); }
+}
+
+function toggleBgInput() {
+  const type = document.getElementById('h_bg_type')?.value || 'image';
+  const source = document.getElementById('h_bg_source')?.value || 'url';
+  const urlWrap = document.getElementById('h_bg_url_wrap');
+  const uploadWrap = document.getElementById('h_bg_upload_wrap');
+  const fileInput = document.getElementById('h_bg_file');
+
+  if (urlWrap) urlWrap.style.display = source === 'url' ? 'block' : 'none';
+  if (uploadWrap) uploadWrap.style.display = source === 'upload' ? 'block' : 'none';
+  if (fileInput) fileInput.accept = type === 'video' ? 'video/*' : 'image/*';
+}
+
+function previewBg() {
+  const type = document.getElementById('h_bg_type')?.value || 'image';
+  const url = document.getElementById('h_bg')?.value?.trim();
+  const prev = document.getElementById('h_bg_prev');
+  if (!prev) return;
+  
+  if (url) {
+    if (type === 'video') {
+      prev.innerHTML = `<video controls src="${url}" style="max-width:100%;max-height:200px;"></video>`;
+    } else {
+      prev.innerHTML = `<img src="${url}" alt="Hero background preview">`;
+    }
+    prev.classList.add('show');
+  } else {
+    prev.innerHTML = '';
+    prev.classList.remove('show');
+  }
+}
+
+function handleFileUpload(fileInputId, urlInputId) {
+  const file = document.getElementById(fileInputId)?.files[0];
+  if (!file) return;
+  
+  // Check file size (10MB limit)
+  if (file.size > 10 * 1024 * 1024) {
+    showToast('File too large. Maximum size is 10MB.', 'error');
+    return;
+  }
+  
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    document.getElementById(urlInputId).value = e.target.result;
+    // Determine which preview function to call
+    if (urlInputId === 'h_bg') {
+      previewBg();
+    } else if (urlInputId === 'm_pimg') {
+      previewProjectMedia();
+    } else if (urlInputId === 'm_timg_data') {
+      // Testimonial image
+      const prev = document.getElementById('m_timg_prev');
+      if (prev) {
+        prev.innerHTML = `<img src="${e.target.result}" alt="Client photo" style="width:100%;height:100%;object-fit:cover;">`;
+        prev.classList.add('show');
+      }
+    }
+    showToast('File uploaded successfully');
+  };
+  reader.readAsDataURL(file);
+}
+
+function handleTestimonialImageUpload() {
+  const file = document.getElementById('m_timg')?.files[0];
+  if (!file) return;
+  
+  // Check file size (5MB limit for testimonial images)
+  if (file.size > 5 * 1024 * 1024) {
+    showToast('File too large. Maximum size is 5MB for testimonial images.', 'error');
+    return;
+  }
+  
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    document.getElementById('m_timg_data').value = e.target.result;
+    const prev = document.getElementById('m_timg_prev');
+    if (prev) {
+      prev.innerHTML = `<img src="${e.target.result}" alt="Client photo" style="width:100%;height:100%;object-fit:cover;">`;
+      prev.classList.add('show');
+    }
+    showToast('Client photo uploaded successfully');
+  };
+  reader.readAsDataURL(file);
+}
+
+function toggleProjectMedia() {
+  const type = document.getElementById('m_pmtype')?.value || 'image';
+  const source = document.getElementById('m_pmsource')?.value || 'url';
+  const urlWrap = document.getElementById('m_pmurl_wrap');
+  const uploadWrap = document.getElementById('m_pmupload_wrap');
+  const fileInput = document.getElementById('m_pmfile');
+
+  if (urlWrap) urlWrap.style.display = source === 'url' ? 'block' : 'none';
+  if (uploadWrap) uploadWrap.style.display = source === 'upload' ? 'block' : 'none';
+  if (fileInput) fileInput.accept = type === 'video' ? 'video/*' : 'image/*';
+  
+  // Update label
+  const urlLabel = urlWrap?.querySelector('label');
+  if (urlLabel) urlLabel.textContent = `${type === 'video' ? 'Video' : 'Image'} URL`;
+  
+  const uploadLabel = uploadWrap?.querySelector('label');
+  if (uploadLabel) uploadLabel.textContent = `Upload ${type === 'video' ? 'Video' : 'Image'} File`;
+}
+
+function previewProjectMedia() {
+  const type = document.getElementById('m_pmtype')?.value || 'image';
+  const url = document.getElementById('m_pimg')?.value?.trim();
+  const prev = document.getElementById('m_pimg_prev');
+  if (!prev) return;
+  
+  if (url) {
+    if (type === 'video') {
+      prev.innerHTML = `<video controls src="${url}" style="max-width:100%;max-height:200px;"></video>`;
+    } else {
+      prev.innerHTML = `<img src="${url}" alt="Project media preview">`;
+    }
+    prev.classList.add('show');
+  } else {
+    prev.innerHTML = '';
+    prev.classList.remove('show');
+  }
+}
+
+// ══════════════════════════════════════════════════════
+//  EXPORT / IMPORT / RESET
+// ══════════════════════════════════════════════════════
+function exportData() {
+  const blob = new Blob([JSON.stringify(siteData, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'mantelet-site-data-' + new Date().toISOString().slice(0,10) + '.json';
+  a.click();
+  showToast('Site data exported successfully');
+  logActivity('Data <strong>exported</strong> to JSON');
+}
+
+function importData() {
+  document.getElementById('importInput').click();
+}
+
+function handleImport(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = evt => {
+    try {
+      const parsed = JSON.parse(evt.target.result);
+      siteData = deepMerge(DEFAULT_DATA, parsed);
+      saveData(siteData);
+      location.reload();
+    } catch(err) {
+      showToast('Invalid JSON file', 'error');
+    }
+  };
+  reader.readAsText(file);
+  e.target.value = '';
+}
+
+function confirmReset() {
+  if (!confirm('⚠️ This will delete ALL your edits and restore the original content. This cannot be undone.\n\nAre you sure?')) return;
+  siteData = resetData();
+  location.reload();
+}
+
+function handleLogout() {
+  if (confirm('Log out of the admin portal?')) {
+    showToast('Logged out', 'warn');
+    setTimeout(() => { window.location.href = '../index.html'; }, 1200);
+  }
+}
+
+// ══════════════════════════════════════════════════════
+//  MOBILE SIDEBAR
+// ══════════════════════════════════════════════════════
+function openSidebar() {
+  document.getElementById('sidebar').classList.add('open');
+  document.getElementById('sidebarOv').style.display = 'block';
+  document.body.style.overflow = 'hidden';
+}
+
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebarOv').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+// Keyboard shortcut: Escape closes modal / sidebar
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeModal(); closeSidebar(); }
+  // Ctrl/Cmd + S to save current page
+  if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+    e.preventDefault();
+    const page = document.querySelector('.page.active');
+    if (!page) return;
+    const id = page.id;
+    if (id === 'page-hero') saveHero();
+    else if (id === 'page-about') saveAbout();
+    else if (id === 'page-contact') saveContact();
+    else if (id === 'page-meta') saveMeta();
+    else showToast('Use the save button for this section', 'warn');
+  }
+  // Ctrl/Cmd + K to open quick navigation
+  if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+    e.preventDefault();
+    showQuickNav();
+  }
+});
+
+// ── UNSAVED CHANGES WARNING ───────────────────────────
+let hasUnsaved = false;
+window.addEventListener('beforeunload', e => {
+  if (hasUnsaved) {
+    e.preventDefault();
+    e.returnValue = 'You have unsaved changes. Are you sure you want to leave?';
+  }
+});
+// Override scheduleSave to track unsaved state
+const _origScheduleSave = scheduleSave;
+
+// ── QUICK NAV MODAL ───────────────────────────────────
+function showQuickNav() {
+  const pages = ['dashboard','hero','about','services','projects','testimonials','stats','contact','meta'];
+  const labels = PAGE_LABELS;
+  openModal('Quick Navigate (⌘K)', `
+    <p style="font-size:.82rem;color:var(--text-m);margin-bottom:1rem">Jump to any section instantly:</p>
+    <div style="display:flex;flex-direction:column;gap:.5rem">
+      ${pages.map(p => `
+        <button onclick="navigate('${p}',document.querySelector('[data-page=${p}]'));closeModal()" style="
+          display:flex;align-items:center;gap:.75rem;
+          background:var(--bg);border:1px solid var(--border);
+          padding:.75rem 1rem;text-align:left;cursor:pointer;
+          font-family:var(--fb);font-size:.875rem;color:var(--text-h);
+          border-radius:var(--radius);transition:all .2s;
+        " onmouseover="this.style.borderColor='var(--teal)';this.style.background='var(--teal-pale)'" onmouseout="this.style.borderColor='';this.style.background=''">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          ${labels[p]}
+        </button>`).join('')}
+    </div>
+  `);
+  document.getElementById('modalSave').style.display = 'none';
+}
+</script>
+</body>
+</html>
