@@ -940,7 +940,7 @@ const DEF = {
     {id:'t2',initials:'SK',name:'Dr. Sarah Kamau',role:'Director, Medstar Healthcare Group',rating:5,quote:'Working with Mantelet on our hospital expansion was a genuinely seamless experience. Their technical knowledge of healthcare construction costs is unmatched, and their contract administration kept our contractors fully accountable.'},
     {id:'t3',initials:'RO',name:'Robert Ochieng',role:'MD, Horizon Developments · Kampala',rating:5,quote:'The professionalism Mantelet demonstrated is rarely encountered in this market. Their BOQ preparation was meticulous and their engagement during the tender process generated genuinely competitive outcomes for our development.'}
   ],
-  contact:{address:'Spur Mall, Kimbo along Thika Super Highway\nNairobi, Kenya',phone1:'+254724411574',phone2:'+254724411574',email1:'info@mantelet.co.ke',email2:'projects@mantelet.co.ke',hours:'Mon – Fri: 8:00 AM – 5:30 PM\nSaturday: 9:00 AM – 1:00 PM',linkedin:'#',facebook:'#',instagram:'#',mapEmbed:'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15955.2!2d36.79!3d-1.268!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f173c0a1f67df%3A0xd3a09e7bfc7ce29d!2sSpur%20Mall%2C%20Kimbo!5e0!3m2!1sen!2ske!4v1609459200000!5m2!1sen!2ske'},
+  contact:{address:'Spur Mall, Kimbo along Thika Super Highway\nNairobi, Kenya',phone1:'+254724411574',phone2:'+254724411574',email1:'info@mantelet.co.ke',email2:'projects@mantelet.co.ke',hours:'Mon – Fri: 8:00 AM – 5:30 PM\nSaturday: 9:00 AM – 1:00 PM',linkedin:'#',facebook:'#',instagram:'#',mapEmbed:'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.8179739145087!2d36.9538193!3d-1.2198187!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f10b8e0b8e5c7%3A0x6b2c9f3e0d8e8f9!2sSpur%20Mall%2C%20Kimbo!5e0!3m2!1sen!2ske!4v1609459200000!5m2%1sen%2ske'},
   meta:{companyName:'Mantelet Consultants',tagline:'Precision. Transparency. Excellence.',footerDesc:'Professional quantity surveying and project management delivering precision, transparency, and measurable value across East Africa and beyond.',estYear:'2010',ratingScore:'4.9',ratingCount:'86',clients:['Kenya Airports Authority','Safaricom PLC','Kenya Power','NHBF','Radisson Hotels','Knight Frank']}
 };
 
@@ -1028,7 +1028,8 @@ const D=getData();
   g('heroSub').textContent=h.subtext||'';
   g('heroB1').innerHTML=esc(h.btn1Text)+' <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
   g('heroB2').textContent=h.btn2Text||'Contact Us';
-  g('heroStats').innerHTML=D.stats.map(s=>'<div class="hst"><span class="hstn" data-target="'+s.value+'" data-suffix="'+esc(s.suffix)+'">'+s.value+esc(s.suffix)+'</span><span class="hstl">'+esc(s.label)+'</span><span class="hstd">'+esc(s.desc)+'</span></div>').join('');
+  g('heroStats').innerHTML=D.stats.map(s=>'<div class="hst"><span class="hstn"><span class="ctr" data-target="'+s.value+'" data-suffix="'+esc(s.suffix)+'">0</span></span><span class="hstl">'+esc(s.label)+'</span><span class="hstd">'+esc(s.desc)+'</span></div>').join('');
+  document.querySelectorAll('.hst .ctr').forEach(e=>ctrObs.observe(e));
 })();
 
 // ABOUT
@@ -1044,6 +1045,7 @@ const D=getData();
   g('abTxt').textContent=a.badgeText||'Years of Excellence';
   g('abVals').innerHTML=(a.values||[]).map(v=>'<div class="aval"><span class="aval-gem"></span>'+esc(v)+'</div>').join('');
   g('abStats').innerHTML=D.stats.map(s=>'<div class="ast"><span class="ast-n"><span class="ctr" data-target="'+s.value+'">0</span><span class="ast-s">'+esc(s.suffix)+'</span></span><span class="ast-l">'+esc(s.label)+'</span></div>').join('');
+  document.querySelectorAll('.ast .ctr').forEach(e=>ctrObs.observe(e));
 })();
 
 // SERVICES
@@ -1065,6 +1067,7 @@ const D=getData();
   const gr=g('numsGrid');
   gr.innerHTML=D.stats.map(s=>'<div class="ni rv"><span class="ni-n"><span class="ctr" data-target="'+s.value+'">0</span><span class="ni-s">'+esc(s.suffix)+'</span></span><span class="ni-l">'+esc(s.label)+'</span></div>').join('');
   document.querySelectorAll('.ni.rv').forEach(e=>rvObs.observe(e));
+  document.querySelectorAll('.ni .ctr').forEach(e=>ctrObs.observe(e));
 })();
 
 // PROJECTS
