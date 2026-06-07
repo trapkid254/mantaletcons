@@ -2123,8 +2123,11 @@ function confirmReset() {
 
 function handleLogout() {
   if (confirm('Log out of the admin portal?')) {
+    // Clear admin authentication
+    sessionStorage.removeItem('mc_admin_auth');
+    localStorage.removeItem('mantelet_admin_profile');
     showToast('Logged out', 'warn');
-    setTimeout(() => { window.location.href = '../index.html'; }, 1200);
+    setTimeout(() => { window.location.href = 'admin-login.html'; }, 1200);
   }
 }
 

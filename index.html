@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,23 +30,23 @@ input,textarea,select{font-family:inherit}
   --fb:'Outfit',system-ui,sans-serif;
 }
 [data-theme="light"]{
-  --bg:#fff;--bg2:#f0fdfa;--bg3:#ccfbf1;
+  --bg:#f8fafc;--bg2:#f0f9f8;--bg3:#e6f2f1;
   --dk:#042f2e;
   --sur:#fff;
-  --bdr:rgba(13,148,136,.12);--bdrm:rgba(13,148,136,.28);
+  --bdr:rgba(13,148,136,.18);--bdrm:rgba(13,148,136,.35);
   --th:#042f2e;--tb:#134e4a;--tm:#0f766e;--ts:#5eead4;
   --ti:#fff;
-  --card:#fff;--cardh:#f0fdfa;
-  --ib:rgba(13,148,136,.07);
+  --card:#fff;--cardh:#f5fffe;
+  --ib:rgba(13,148,136,.08);
   --lc:rgba(255,255,255,.75);--lcs:#0f766e;
   --nb:rgba(255,255,255,0);--nbs:rgba(255,255,255,.97);
-  --nsh:0 2px 24px rgba(13,148,136,.12);
+  --nsh:0 2px 24px rgba(13,148,136,.15);
   --sb:rgba(255,255,255,.2);--si:rgba(255,255,255,.55);
   --sbs:rgba(13,148,136,.2);--sis:#0f766e;
   --dc:rgba(255,255,255,.15);--dcs:rgba(13,148,136,.18);
-  --hbg:#fff;--hbgs:#042f2e;
-  --logon:#fff;--logons:#042f2e;
-  --logos:rgba(255,255,255,.4);--logoss:#0f766e;
+  --hbg:#042f2e;--hbgs:#042f2e;
+  --logon:#042f2e;--logons:#042f2e;
+  --logos:rgba(4,47,46,.4);--logoss:#0f766e;
 }
 [data-theme="dark"]{
   --bg:#042f2e;--bg2:#063a38;--bg3:#084d4a;
@@ -79,6 +79,7 @@ body{background:var(--bg);color:var(--tb);transition:background .35s,color .35s}
 ============================================= */
 .wrap{max-width:1260px;margin:0 auto;padding:0 clamp(1.2rem,4vw,2.5rem)}
 .sec{padding:clamp(4.5rem,8vw,7.5rem) 0;min-height:300px}
+[data-theme="light"] .sec:not(.sec-dk):not(.sec-alt){border-bottom:1px solid rgba(13,148,136,.06)}
 .sec-alt{background:var(--bg2)}
 .sec-dk{background:var(--dk);position:relative;overflow:hidden}
 .tag{display:inline-flex;align-items:center;gap:.6rem;font-size:.68rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--t1);margin-bottom:.9rem}
@@ -290,7 +291,7 @@ body{background:var(--bg);color:var(--tb);transition:background .35s,color .35s}
 .avals{display:flex;flex-direction:column;gap:.82rem;margin:1.8rem 0 2.2rem}
 .aval{display:flex;align-items:center;gap:.9rem;font-size:.9375rem;color:var(--tb);font-weight:300}
 .aval-gem{width:8px;height:8px;flex-shrink:0;background:var(--t1);clip-path:polygon(50% 0%,93% 25%,93% 75%,50% 100%,7% 75%,7% 25%)}
-.astats{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--bdr)}
+.astats{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--bdr)}
 .ast{padding:1.2rem 1.4rem;border-right:1px solid var(--bdr)}
 .ast:last-child{border-right:none}
 .ast-n{font-family:var(--fd);font-size:2rem;font-weight:300;color:var(--th);display:block;line-height:1}
@@ -302,7 +303,8 @@ body{background:var(--bg);color:var(--tb);transition:background .35s,color .35s}
 ============================================= */
 .svch{display:flex;justify-content:space-between;align-items:flex-end;gap:2rem;margin-bottom:3.25rem;flex-wrap:wrap}
 .svcg{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5px;background:var(--bdr)}
-.svc{background:var(--card);padding:2.35rem 2rem;position:relative;overflow:hidden;transition:background .35s;cursor:default}
+.svc{background:var(--card);padding:2.35rem 2rem;position:relative;overflow:hidden;transition:background .35s,box-shadow .35s;cursor:default}
+[data-theme="light"] .svc{box-shadow:0 2px 12px rgba(13,148,136,.08)}
 .svc-ln{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--t2),var(--t1),var(--tl));transform:scaleX(0);transform-origin:left;transition:transform .45s}
 .svc:hover{background:var(--cardh)}
 .svc:hover .svc-ln{transform:scaleX(1)}
@@ -412,7 +414,8 @@ body{background:var(--bg);color:var(--tb);transition:background .35s,color .35s}
 .tsc{font-family:var(--fd);font-size:1.6rem;font-weight:300;color:var(--th)}
 .tcnt{font-size:.78rem;color:var(--tm)}
 .testic{display:flex;flex-direction:column;gap:1.5px;background:var(--bdr)}
-.te{background:var(--card);padding:2.15rem 2rem;transition:background .35s;position:relative;overflow:hidden}
+.te{background:var(--card);padding:2.15rem 2rem;transition:background .35s,box-shadow .35s;position:relative;overflow:hidden}
+[data-theme="light"] .te{box-shadow:0 2px 12px rgba(13,148,136,.08)}
 .te::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2.5px;background:var(--t1);transform:scaleY(0);transform-origin:top;transition:transform .38s}
 .te:hover{background:var(--cardh)}
 .te:hover::before{transform:scaleY(1)}
@@ -429,16 +432,19 @@ body{background:var(--bg);color:var(--tb);transition:background .35s,color .35s}
 ============================================= */
 .cog{display:grid;grid-template-columns:1fr 1.5fr;gap:clamp(3rem,6vw,5.5rem);align-items:start}
 .codt{display:flex;gap:.9rem;margin-bottom:1.7rem;align-items:flex-start}
-.coico{width:44px;height:44px;border:1.5px solid var(--bdr);flex-shrink:0;display:flex;align-items:center;justify-content:center;background:var(--ib);margin-top:2px}
+.coico{width:44px;height:44px;border:1.5px solid var(--bdr);flex-shrink:0;display:flex;align-items:center;justify-content:center;background:var(--ib);margin-top:2px;transition:box-shadow .35s}
+[data-theme="light"] .coico{box-shadow:0 2px 8px rgba(13,148,136,.1)}
 .coico svg{width:18px;height:18px;stroke:var(--t1);fill:none;stroke-width:1.5}
 .colbl{font-size:.66rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--t1);display:block;margin-bottom:.3rem}
 .coval{font-size:.9rem;line-height:1.62;color:var(--tb);font-weight:300}
 .coval a{color:var(--tb);transition:color .2s}
 .coval a:hover{color:var(--t1)}
-.comap{width:100%;height:220px;overflow:hidden;border:1.5px solid var(--bdr);margin-top:2rem}
+.comap{width:100%;height:220px;overflow:hidden;border:1.5px solid var(--bdr);margin-top:2rem;transition:box-shadow .35s}
+[data-theme="light"] .comap{box-shadow:0 2px 12px rgba(13,148,136,.08)}
 .comap iframe{width:100%;height:100%;border:none;filter:grayscale(1) contrast(1.1);opacity:.75;display:block}
 [data-theme="dark"] .comap iframe{opacity:.4;filter:grayscale(1) invert(1) contrast(.85)}
-.cofrm{background:var(--sur);border:1.5px solid var(--bdr);padding:clamp(1.75rem,3.5vw,2.75rem)}
+.cofrm{background:var(--sur);border:1.5px solid var(--bdr);padding:clamp(1.75rem,3.5vw,2.75rem);transition:box-shadow .35s}
+[data-theme="light"] .cofrm{box-shadow:0 4px 20px rgba(13,148,136,.1)}
 .cofrm-t{font-family:var(--fd);font-size:1.55rem;font-weight:300;color:var(--th);margin-bottom:.38rem}
 .cofrm-s{font-size:.875rem;color:var(--tm);margin-bottom:1.9rem;line-height:1.65;font-weight:300}
 .fg{margin-bottom:1.25rem}
@@ -529,6 +535,10 @@ footer::after{content:'M';position:absolute;bottom:-4rem;right:-1rem;font-family
   .svcg{grid-template-columns:1fr 1fr}
   .whyl{grid-template-columns:1fr}
   .testil{grid-template-columns:1fr;gap:3rem}
+  .astats{grid-template-columns:repeat(2,1fr)}
+  .ast:nth-child(2){border-right:none}
+  .ast:nth-child(3){border-top:1px solid var(--bdr)}
+  .ast:nth-child(4){border-top:1px solid var(--bdr)}
 }
 @media(max-width:900px){
   .ag{grid-template-columns:1fr;gap:3.5rem}
@@ -536,6 +546,10 @@ footer::after{content:'M';position:absolute;bottom:-4rem;right:-1rem;font-family
   .prjg{grid-template-columns:1fr 1fr;grid-auto-rows:260px}
   .pr:nth-child(1){grid-column:span 2;grid-row:span 1}
   .pr:nth-child(n){grid-column:span 1}
+  .astats{grid-template-columns:repeat(2,1fr)}
+  .ast:nth-child(2){border-right:none}
+  .ast:nth-child(3){border-top:1px solid var(--bdr)}
+  .ast:nth-child(4){border-top:1px solid var(--bdr)}
   .procg{grid-template-columns:1fr 1fr;gap:2.75rem}
   .procg::before{display:none}
   .cog{grid-template-columns:1fr;gap:3rem}
@@ -550,7 +564,8 @@ footer::after{content:'M';position:absolute;bottom:-4rem;right:-1rem;font-family
   .ftg{grid-template-columns:1fr}
   .astats{grid-template-columns:1fr 1fr}
   .ast:nth-child(2){border-right:none}
-  .ast:nth-child(3){border-top:1px solid var(--bdr);border-right:none;grid-column:span 2}
+  .ast:nth-child(3){border-top:1px solid var(--bdr);border-right:none}
+  .ast:nth-child(4){border-top:1px solid var(--bdr)}
   .frow{grid-template-columns:1fr}
   .numsg{grid-template-columns:1fr 1fr}
   .procg{grid-template-columns:1fr}
@@ -634,7 +649,7 @@ footer::after{content:'M';position:absolute;bottom:-4rem;right:-1rem;font-family
     <div class="hin">
       <div>
         <div class="heye"><span class="heyed"></span><span class="heyet" id="heroEye">RICS Aligned · Est. 2010</span></div>
-        <h1 class="htit" id="heroTit">Professional<br><em>Quantity Surveying</em><br>&amp; Construction<br>Consultancy</h1>
+        <h1 class="htit" id="heroTit">Professional<br><em>Quantity Surveying</em><br>&amp; Project<br>Management</h1>
         <p class="hsub" id="heroSub">Delivering precision cost management, rigorous financial oversight, and project excellence for private and public sector clients across East Africa and beyond.</p>
         <div class="hbts">
           <a href="#projects" class="btn bt" id="heroB1">View Our Projects <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
@@ -833,16 +848,16 @@ footer::after{content:'M';position:absolute;bottom:-4rem;right:-1rem;font-family
           <p class="cofrm-s">Tell us about your project and a member of our team will respond within one business day.</p>
           <div id="cForm">
             <div class="frow">
-              <div class="fg"><label class="fl">First Name *</label><input type="text" class="fi" id="fn" placeholder="John"></div>
-              <div class="fg"><label class="fl">Last Name</label><input type="text" class="fi" placeholder="Smith"></div>
+              <div class="fg"><label class="fl">First Name *</label><input type="text" class="fi" id="fn"></div>
+              <div class="fg"><label class="fl">Last Name</label><input type="text" class="fi"></div>
             </div>
-            <div class="fg"><label class="fl">Email *</label><input type="email" class="fi" id="em" placeholder="john@company.com"></div>
+            <div class="fg"><label class="fl">Email *</label><input type="email" class="fi" id="em"></div>
             <div class="frow">
-              <div class="fg"><label class="fl">Phone</label><input type="tel" class="fi" placeholder="+254 7XX XXX XXX"></div>
-              <div class="fg"><label class="fl">Company</label><input type="text" class="fi" placeholder="Your company"></div>
+              <div class="fg"><label class="fl">Phone</label><input type="tel" class="fi"></div>
+              <div class="fg"><label class="fl">Company</label><input type="text" class="fi"></div>
             </div>
             <div class="fg"><label class="fl">Service Required</label><select class="fs" id="svcSel"></select></div>
-            <div class="fg"><label class="fl">Project Details *</label><textarea class="ft" id="msg" placeholder="Describe your project — type, scale, location, timeline, and how we can help..."></textarea></div>
+            <div class="fg"><label class="fl">Project Details *</label><textarea class="ft" id="msg"></textarea></div>
             <button class="cosub" onclick="submitForm()">Send Message <svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></button>
           </div>
           <div class="cook" id="formOk">
@@ -965,7 +980,7 @@ function sico(type){
 //  THEME — apply immediately before any render
 // ============================================================
 const html=document.documentElement;
-const savedTheme=localStorage.getItem('mc-theme')||'light';
+const savedTheme=localStorage.getItem('mc-theme')||'dark';
 html.setAttribute('data-theme',savedTheme);
 
 // ============================================================
@@ -1028,7 +1043,7 @@ const D=getData();
   g('abNum').textContent=a.badgeNumber||'15+';
   g('abTxt').textContent=a.badgeText||'Years of Excellence';
   g('abVals').innerHTML=(a.values||[]).map(v=>'<div class="aval"><span class="aval-gem"></span>'+esc(v)+'</div>').join('');
-  g('abStats').innerHTML=D.stats.slice(0,3).map(s=>'<div class="ast"><span class="ast-n"><span class="ctr" data-target="'+s.value+'">0</span><span class="ast-s">'+esc(s.suffix)+'</span></span><span class="ast-l">'+esc(s.label)+'</span></div>').join('');
+  g('abStats').innerHTML=D.stats.map(s=>'<div class="ast"><span class="ast-n"><span class="ctr" data-target="'+s.value+'">0</span><span class="ast-s">'+esc(s.suffix)+'</span></span><span class="ast-l">'+esc(s.label)+'</span></div>').join('');
 })();
 
 // SERVICES
